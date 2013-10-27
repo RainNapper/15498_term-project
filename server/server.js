@@ -5,15 +5,31 @@ var app     = express();
 
 app.use(express.static(__dirname));
 
-app.get('/testSk', function(req, res) {
-  console.log("Testing sk");
-  //var command = spawn('../sk/sleuthkit-4.1.2/tools/fstools/fsstat', ['../images/ntfs-img-kw-1.dd'])
-  console.log("dirname: "+__dirname);
-  var command = exec(__dirname+'/test.sh',
+app.get('/exec_cmd', function(req, res) {
+  console.log("Running command: "+req.query.cmd);
+  console.log("On target: "+req.query.target);
+
+  target = __dirname+'/../images/'+req.query.target;
+  cmd = __dirname+'/../sk/sleuthkit-4.1.2/tools/'+req.query.cmd+' '+target;
+  console.log("Executing: "+cmd);
+  output = []
+
+  var command = exec(cmd,
     function(error,stdout,stderr) {
-      console.log('error: '+error);
-      console.log('stdout: '+stdout);
+      console.log('ERROR: '+error);
+      output.push(stdout);
     });
+
+  command.on('close', function(code) {
+    if (code === 0)
+    {
+      res.send(Buffer.concat(output));
+    }
+    else
+    {
+      res.send(500); // when the script fails, generate a Server Error HTTP response
+    }
+  });
 });
 
 app.get('/colorsRequest', function(req, res) {
