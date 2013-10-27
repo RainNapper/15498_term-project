@@ -8,9 +8,15 @@
           $.get('/exec_cmd', { cmd : $('#cmd').val(),
                                target : $('#target').val()})
            .done(function(data) {
-              $('#output').html(data);
+              $('#output').val(data);
             });
           });
+        
+        $('#target').keyup(function(event) {
+          if (event.keyCode == 13) {
+            $('#submit').click();
+          }
+        });
       });
     </script>
   </head>
@@ -24,10 +30,7 @@
       <input type='submit' id='submit' name='Send'>
     </div>
     <div label='results'>
-      Output:
-      <div id='output'>
-        None
-      </div>
+      <textarea readonly id='output' rows='35' cols='60' wrap='off'></textarea>
     </div>
   </body>
 </html>
