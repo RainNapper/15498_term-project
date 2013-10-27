@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+  <head>
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+    <script>
+      $(function(){
+        $('#submit').click(function() {
+          $.get('/colorsRequest', { cmd : $('#command').val(),
+                                    opts: $('#options').val().split(' ')})
+           .done(function(data) {
+              $('#output').html(data);
+            });
+          });
+      });
+    </script>
+  </head>
+  <body>
+    <div label='input'>
+      <input type='text' id='command'><br>
+      <input type='text' id='options'><br>
+      <input type='submit' id='submit' name='Send'>
+    </div>
+    <div label='results'>
+      Output:
+      <div id='output'>
+        None
+      </div>
+    </div>
+  </body>
+</html>
