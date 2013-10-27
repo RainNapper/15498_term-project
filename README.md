@@ -1,5 +1,6 @@
-HEAD
-Mansfield's Test2
-=======
-iasdkjfaskdjfhakjsh
-2e70dda970a7d3bdd268670456186d2f0494afbf
+15-498 Term Project for:
+Deanna, Eugene, Mansfield
+
+SSH URL:
+git@github.com:RainNapper/15498_term-project.git
+
