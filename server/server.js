@@ -5,12 +5,16 @@ var app     = express();
 
 app.use(express.static(__dirname));
 
+// Need to be entered by user at some point
+var toolPath = '/home/eugene/Desktop/sleuthkit-4.1.2/tools/';
+var imagePath = __dirname + '/../images/';
+
 app.get('/exec_cmd', function(req, res) {
   console.log("Running command: "+req.query.cmd);
   console.log("On target: "+req.query.target);
 
-  target = __dirname+'/../images/'+req.query.target;
-  cmd = __dirname+'/../sk/sleuthkit-4.1.2/tools/'+req.query.cmd+' '+target;
+  target = imagePath+req.query.target;
+  cmd = toolPath + req.query.cmd+' '+target;
   console.log("Executing: "+cmd);
   output = []
 
