@@ -5,14 +5,18 @@
     <script>
       $(function(){
         $('#submit').click(function() {
-          $.get('/exec_cmd', { cmd : $('#cmd').val(),
-                               target : $('#target').val()})
+          $.get('/exec_cmd', { cmd : $('#command').val(),
+                               imagePath : $('#imagePath').val()})
            .done(function(data) {
               $('#output').val(data);
             });
           });
+
+        $('#clear').click(function() {
+          $('#output').val('');
+        });
         
-        $('#target').keyup(function(event) {
+        $('#command').keyup(function(event) {
           if (event.keyCode == 13) {
             $('#submit').click();
           }
@@ -22,13 +26,16 @@
   </head>
   <body>
     <div label='input'>
-      <select id='cmd'>
+      Image File Path: <input type='text' id='imagePath'><br>
+      Command: <input type='text' id='command'><br>
+      <!--<select id='cmd'>
         <option value="mount">mount</option>
         <option value="fstools/fsstat">fsstat</option>
         <option value="fstools/blkstat">blkstat</option>
       </select>
-      <input type='text' id='target'><br>
-      <input type='submit' id='submit' name='Send'>
+      <input type='text' id='target'><br>-->
+      <input type='submit' id='submit' value='Send Command'>
+      <input type='button' id='clear' value='Clear'>
     </div>
     <div label='results'>
       <textarea readonly id='output' rows='35' cols='60' wrap='off'></textarea>
