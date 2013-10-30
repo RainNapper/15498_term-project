@@ -8,15 +8,20 @@ var TSKTools = [["fsstat", "fstools/"], ["blkstat", "fstools/"]];
 app.use(express.static(__dirname));
 
 // Need to be entered by user at some point
-var toolPath = '/home/eugene/Desktop/sleuthkit-4.1.2/tools/';
-var imagePath = __dirname + '/../images/';
+//var toolPath = '/home/eugene/Desktop/sleuthkit-4.1.2/tools/';
+//var imagePath = __dirname + '/../images/';
 
 app.get('/exec_cmd', function(req, res) {
   console.log("Running command: "+req.query.cmd);
   //console.log("On target: "+req.query.target);
   console.log("Image path: " + req.query.imagePath);
+  console.log("TSK Tool path: " + req.query.toolPath);
 
-  // TODO - validate image path
+  var toolPath = req.query.toolPath;
+  // Add trailing '/' if necessarry
+  if (toolPath.slice (-1) !== "/") toolPath = toolPath + "/";
+
+  // TODO - validate image path and tool path
 
   // Ignore mount for now - not yet implemented
   if (req.query.cmd === "mount") return;

@@ -6,7 +6,8 @@
       $(function(){
         $('#submit').click(function() {
           $.get('/exec_cmd', { cmd : $('#command').val(),
-                               imagePath : $('#imagePath').val()})
+                               imagePath : $('#imagePath').val(),
+                               toolPath : $('#toolPath').val()})
            .done(function(data) {
               $('#output').val(data);
             });
@@ -26,6 +27,7 @@
   </head>
   <body>
     <div label='input'>
+      TSK Tool Path: <input type='text' id='toolPath'><br>
       Image File Path: <input type='text' id='imagePath'><br>
       Command: <input type='text' id='command'><br>
       <!--<select id='cmd'>
