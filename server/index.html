@@ -1,30 +1,46 @@
 <!doctype html>
 <html>
   <head>
-    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+    <script src='jquery-1.9.1.js'></script>
     <script>
       $(function(){
         $('#submit').click(function() {
-          $.get('/colorsRequest', { cmd : $('#command').val(),
-                                    opts: $('#options').val().split(' ')})
+          $.get('/exec_cmd', { cmd : $('#command').val(),
+                               imagePath : $('#imagePath').val(),
+                               toolPath : $('#toolPath').val()})
            .done(function(data) {
-              $('#output').html(data);
+              $('#output').val(data);
             });
           });
+
+        $('#clear').click(function() {
+          $('#output').val('');
+        });
+        
+        $('#command').keyup(function(event) {
+          if (event.keyCode == 13) {
+            $('#submit').click();
+          }
+        });
       });
     </script>
   </head>
   <body>
     <div label='input'>
-      <input type='text' id='command'><br>
-      <input type='text' id='options'><br>
-      <input type='submit' id='submit' name='Send'>
+      TSK Tool Path: <input type='text' id='toolPath'><br>
+      Image File Path: <input type='text' id='imagePath'><br>
+      Command: <input type='text' id='command'><br>
+      <!--<select id='cmd'>
+        <option value="mount">mount</option>
+        <option value="fstools/fsstat">fsstat</option>
+        <option value="fstools/blkstat">blkstat</option>
+      </select>
+      <input type='text' id='target'><br>-->
+      <input type='submit' id='submit' value='Send Command'>
+      <input type='button' id='clear' value='Clear'>
     </div>
     <div label='results'>
-      Output:
-      <div id='output'>
-        None
-      </div>
+      <textarea readonly id='output' rows='35' cols='60' wrap='off'></textarea>
     </div>
   </body>
 </html>
