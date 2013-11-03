@@ -12,13 +12,29 @@
 	</div>
 	
 	<div id="content">
-		<form name="myform" action="javascript:processFile()">
+		<form name="myform" action="javascript:loadFile()">
 			<input type="text" id="file-input" class="home" rows="1"></textarea>
-			<input type="submit" class="home" value="Upload image">
+			<input type="submit" class="home" id="timeline" value="Upload image">
 		</form>
 	</div>
 	
-	<script src="home.js"></script>
 	<script src="jquery-1.9.0.js"></script>
+	<script src="home.js"></script>
 	</body>
+	
+	<script type= "text/javascript">
+		function loadFile(){
+			var file = $("#file-input").val();
+			if (file !== "") {
+				$("#file-input").val('');
+				window.location.href = "timeline.html";
+				processFile(file);
+			}
+			else {
+				alert("No filename specified!");
+			}
+		} 
+	
+	</script>
+
 </html>

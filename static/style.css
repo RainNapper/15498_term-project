@@ -15,7 +15,7 @@ ul {
 }
 
 body {
-	background: #EEE;
+	background: #eee;
 	font: 16px/1.5 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	color: #000;
 }
@@ -24,7 +24,7 @@ body {
 	margin: 50px;
 	padding: 10px 20px 10px 20px;
 	
-	background-color: #FFF;
+	background-color: #fff;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	
@@ -37,13 +37,17 @@ body {
 #content{
 	position: relative;
 	margin: 100px;
-	padding-left: 22px;
-	padding-right: 22px;
 	display: block;
-	font-size: 22px;
 }
 
-input[type="submit"] {
+#file-input {
+	font-size: 24px;
+	padding: 15px 15px;
+	border: 2px inset #ddd;
+	width: 70%;
+}
+
+#timeline {
 	background-color: #2bf; 
 	color: #FFF;
 	font-weight: bold;
@@ -53,7 +57,10 @@ input[type="submit"] {
 	margin: 10px 20px;
 	border: 5px solid #ccc;
 	
-	position: absolute;
-	display: block;
+	position: relative;
 	right: 0px;
+}
+
+#timeline:hover{
+	background-color: #d30; 
 }
