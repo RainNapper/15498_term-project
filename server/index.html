@@ -21,11 +21,55 @@
           if (event.keyCode == 13) {
             $('#submit').click();
           }
+        })
+        
+        $('#get_imgs').click(function() {
+          $.get('/get_images', null)
+           .done(function(res)
+           {
+             $('#output').val(res.output);
+             var all_imgs = res.imgs;
+             for(var i = 0; i < all_imgs.length; i++)
+             {
+               var opt = document.createElement("option");
+               opt.text = all_imgs[i];
+               opt.value = all_imgs[i];
+               $('#img_list').append($('#img_list').add(opt,null));
+             }
+           });
+         });
+
+         $('#select_img').click(function() {
+           $.get('/select_image', { img_name : $('#img_list').val() })
+            .done(function(res)
+            {
+              if(res.success)
+                alert("Yay success!");
+              else
+                alert("Boo failure!");
+            });
+          });
+        
+        $('#load_db').click(function() {
+          $.get('/load_db', null)
+           .done(function(res)
+           {
+             if(res.success)
+               alert("Yay success!");
+             else
+               alert("Boo failure!");
+           });
         });
+        
       });
     </script>
   </head>
   <body>
+    <input type='submit' id='get_imgs' value='Get Images'>
+    <select id='img_list'>
+    </select>
+    <input type='submit' id='select_img' value='Select Image'>
+    <input type='submit' id='load_db' value='Create DB File'>
     <div label='input'>
       TSK Tool Path: <input type='text' id='toolPath'><br>
       Image File Path: <input type='text' id='imagePath'><br>
