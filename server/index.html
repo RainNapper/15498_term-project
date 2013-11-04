@@ -29,6 +29,7 @@
            {
              $('#output').val(res.output);
              var all_imgs = res.imgs;
+             $('#img_list').empty();
              for(var i = 0; i < all_imgs.length; i++)
              {
                var opt = document.createElement("option");

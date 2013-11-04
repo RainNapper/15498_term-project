@@ -1,6 +1,7 @@
 var spawn   = require('child_process').spawn;
 var exec    = require('child_process').exec;
 var express = require('express');
+var $       = require
 var app     = express();
 
 var TSKTools = [["fsstat", "fstools/"], ["blkstat", "fstools/"]];
@@ -10,6 +11,14 @@ app.use(express.static(__dirname));
 var available_images = []
 var db_path = 'target_img_db.db';
 var target_img = "";
+
+function isNotEmpty(element) {
+  var pat = /\S*\.dd/;
+  console.log(element);
+  console.log(pat.test(element));
+  return pat.test(element);
+}
+
 
 // req type:
 // - None
@@ -23,7 +32,8 @@ app.get('/get_images', function(req, res) {
   var command = exec(cmd,
     function(error,stdout,stderr) {
       console.log('ERROR: '+error);
-      available_images = stdout.split(/\s+/)
+      available_images = stdout.match(/\S*.dd/);
+      //available_images = available_images.filter(isNotEmpty);
       output.push(stdout);
     });
 
@@ -60,10 +70,10 @@ app.get('/select_image', function(req, res) {
 });
 
 app.get('/load_db', function(req,res) {
-  cmd = 'rm target_img_db.db';
+  cmd = 'rm '+db_path;
   exec(cmd, function(error,stdout,stderr) {});
 
-  cmd = 'tsk_loaddb -d target_img_db.db '+target_img;
+  cmd = 'tsk_loaddb -d '+db_path+' '+target_img;
   console.log('Running cmd: '+cmd);
   output = [];
   var command = exec(cmd,
