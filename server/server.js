@@ -8,17 +8,10 @@ var TSKTools = [["fsstat", "fstools/"], ["blkstat", "fstools/"]];
 
 app.use(express.static(__dirname));
 
-var available_images = []
+var IMAGE_REGEX = /\S*\.(dd|raw)/g;
+var available_images = [];
 var db_path = 'target_img_db.db';
 var target_img = "";
-
-function isNotEmpty(element) {
-  var pat = /\S*\.dd/;
-  console.log(element);
-  console.log(pat.test(element));
-  return pat.test(element);
-}
-
 
 // req type:
 // - None
@@ -26,13 +19,14 @@ function isNotEmpty(element) {
 // - imgs: List of available images in /images directory
 // - output: Raw string of output. May or may not be useful
 app.get('/get_images', function(req, res) {
-  cmd = 'ls ' + __dirname+'/../images/*.dd';
+  cmd = 'ls ' + __dirname+'/../images/*';
   console.log('Running cmd: '+cmd);
   output = [];
   var command = exec(cmd,
     function(error,stdout,stderr) {
       console.log('ERROR: '+error);
-      available_images = stdout.match(/\S*.dd/);
+      available_images = stdout.match(IMAGE_REGEX);
+      console.log(available_images);
       //available_images = available_images.filter(isNotEmpty);
       output.push(stdout);
     });
