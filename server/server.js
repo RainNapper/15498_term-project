@@ -1,13 +1,15 @@
 var spawn   = require('child_process').spawn;
 var exec    = require('child_process').exec;
 var express = require('express');
+var $       = require
 var app     = express();
 
 var TSKTools = [["fsstat", "fstools/"], ["blkstat", "fstools/"]];
 
 app.use(express.static(__dirname));
 
-var available_images = []
+var IMAGE_REGEX = /\S*\.(dd|raw)/g;
+var available_images = [];
 var db_path = 'target_img_db.db';
 var target_img = "";
 
@@ -17,13 +19,15 @@ var target_img = "";
 // - imgs: List of available images in /images directory
 // - output: Raw string of output. May or may not be useful
 app.get('/get_images', function(req, res) {
-  cmd = 'ls ' + __dirname+'/../images/*.dd';
+  cmd = 'ls ' + __dirname+'/../images/*';
   console.log('Running cmd: '+cmd);
   output = [];
   var command = exec(cmd,
     function(error,stdout,stderr) {
       console.log('ERROR: '+error);
-      available_images = stdout.split(/\s+/)
+      available_images = stdout.match(IMAGE_REGEX);
+      console.log(available_images);
+      //available_images = available_images.filter(isNotEmpty);
       output.push(stdout);
     });
 
@@ -60,10 +64,10 @@ app.get('/select_image', function(req, res) {
 });
 
 app.get('/load_db', function(req,res) {
-  cmd = 'rm target_img_db.db';
+  cmd = 'rm '+db_path;
   exec(cmd, function(error,stdout,stderr) {});
 
-  cmd = 'tsk_loaddb -d target_img_db.db '+target_img;
+  cmd = 'tsk_loaddb -d '+db_path+' '+target_img;
   console.log('Running cmd: '+cmd);
   output = [];
   var command = exec(cmd,
