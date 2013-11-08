@@ -1,3 +1,9 @@
+//file extensions
+var docs = ['doc', 'pdf', 'txt', 'ppt'];
+var img = ['jpg', 'png'];
+var misc = ['log'];
+
+
 function fakeData(time, type) {
 	this.time = time;
 	this.type = type;
@@ -7,7 +13,7 @@ function fakeData(time, type) {
 function makeFakeData() {
 	var data = [];
 	var times = [0, 1, 2, 3];
-	var types = ['img', 'doc', 'log'];
+	var types = ['jpg', 'doc', 'log'];
     var i = 0;
     while (i < 5) {
         var time = Math.floor(Math.random()*times.length);
@@ -24,7 +30,7 @@ function processFile(s) {
 	//do something with the file name
 	var fakeData = makeFakeData();
 	var files = sortByTime(fakeData);
-	refreshDOM(files);
+	drawTimeline(files);
 } 
 
 function sortByTime(data) {
@@ -43,7 +49,7 @@ function sortByTime(data) {
 	return dataByTime;
 }
 
-function refreshDOM(files) {
+function drawTimeline(files) {
 	var myList = $("#content");
 	
 	if (myList !== null) {
@@ -60,23 +66,22 @@ function refreshDOM(files) {
 				"</div>"
 			);
 			
-			switch (file.type) {
-				case ('img'):
-					break;
-				case ('doc'):
-					break;
-				case('log'):
-					break;					
-			}
+			if (docs.indexOf(file.type) > -1) {
+				console.log("doc", file.type);
+			} else if (img.indexOf(file.type) > -1) {
+				console.log("img", file.type);
+			} else if (misc.indexOf(file.type) > -1) {
+				console.log("misc", file.type);
+			} else {
+				console.log("somthing else...", file.type);
+			}							
 			myList.append(elem);
-			console.log(elem);
 		});
-
 		i++;
 	}
 }
 
-
 $(document).ready(function() {
-	processFile("Asdf");
+	// Load the Visualization API and the piechart package.
+	 processFile("Asdf");
 });
