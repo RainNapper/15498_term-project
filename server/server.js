@@ -1,7 +1,8 @@
 var spawn   = require('child_process').spawn;
 var exec    = require('child_process').exec;
 var express = require('express');
-var $       = require
+var fs      = require('fs');
+var sqlite3 = require('sqlite3').verbose();
 var app     = express();
 
 var TSKTools = [["fsstat", "fstools/"], ["blkstat", "fstools/"]];
@@ -65,7 +66,12 @@ app.get('/select_image', function(req, res) {
 
 app.get('/load_db', function(req,res) {
   cmd = 'rm '+db_path;
-  exec(cmd, function(error,stdout,stderr) {});
+  console.log('Running cmd: '+cmd);
+  exec(cmd,
+    function(error,stdout,stderr) {
+      console.log('ERROR: '+error);
+      output.push(stdout);
+    });
 
   cmd = 'tsk_loaddb -d '+db_path+' '+target_img;
   console.log('Running cmd: '+cmd);
@@ -73,7 +79,6 @@ app.get('/load_db', function(req,res) {
   var command = exec(cmd,
     function(error,stdout,stderr) {
       console.log('ERROR: '+error);
-      available_images = stdout.split(/\s+/)
       output.push(stdout);
     });
 
@@ -84,6 +89,35 @@ app.get('/load_db', function(req,res) {
     else
       res.send(500); // when the script fails, generate a Server Error HTTP response
   });
+});
+
+app.get('/list_files', function(req,res) {
+  var db = new sqlite3.Database(db_path);
+  var exists = fs.existsSync(db_path);
+  var files = [];
+  db.serialize(function() {
+    if(!exists)
+    {
+      console.log("Can't find db file");
+    }
+    else
+    {
+      db.each("SELECT * FROM tsk_files",
+        // Callback
+        function(err,row)
+        {
+          files.push(row);
+        },
+        // Completion callback
+        function()
+        {
+          console.log("Finished");
+          res.json( { success   : true,
+                      file_list : files } );
+        });
+    }
+  });
+  db.close();
 });
 
 // Need to be entered by user at some point
