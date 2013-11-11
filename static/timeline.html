@@ -2,19 +2,23 @@
 <html>
 	<head>
 		<title>Deanna, Dongho, James, Mansfield</title>
-		<link href="reset.css" rel="stylesheet" type="text/css">
-		<link href="style.css" rel="stylesheet" type="text/css">
-		<script src="jquery-1.9.0.js"></script>
-		<script src="http://simile.mit.edu/timeline/api/timeline-api.js" type="text/javascript"></script>
-		<script src="home.js"></script>
+		<link href="css/reset.css" rel="stylesheet" type="text/css">
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<script src="js/jquery-1.9.0.js" type="text/javascript"></></script>
+		<script src="js/flot/jquery.flot.js" type="text/javascript"></script>
+		<script src="js/flot/jquery.flot.time.js" type="text/javascript"></script>
+		<script src="js/flot/jquery.flot.symbol.js" type="text/javascript"></script>
+		<script src="js/home.js"></script>
 	</head>
 
-	<body onload="onLoad();" onresize="onResize();">	
+	<body>	
 		<div id="header">
 			<h1>Welcome to our 15-498 project</h1>
 		</div>
-		<div id="timeline" style="height: 150px; border: 1px solid #aaa"></div>
-		<div id="content" style="height: 150px; border: 1px solid #aaa"></div>
+		
+		
+		<div class="tl-container">
+			<div id="timeline" class="tl-placeholder"></div>
 		</div>
 		
 	</body>
