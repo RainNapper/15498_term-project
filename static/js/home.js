@@ -4,6 +4,7 @@ var img = ['jpg', 'png'];
 var misc = ['log'];
 
 
+// time must be in Javascript Date format
 function fakeData(time, type) {
 	this.time = time;
 	this.type = type;
@@ -11,6 +12,7 @@ function fakeData(time, type) {
 
 
 function makeFakeData() {
+
 	var data = [];
 	var types = ['jpg', 'doc', 'log'];
     var i = 0;
@@ -23,16 +25,21 @@ function makeFakeData() {
 	return data;
 }
 
+function processFile(filename) {
 
-function processFile(s) {
-	alert(s);
+	alert(filename);
 	//do something with the file name
-	var fakeData = makeFakeData();
-	var files = sortByTime(fakeData);
+	
+	var data = makeFakeData();
+	
+	
+	var files = sortByTime(data);
 	drawTimeline(files);
 } 
 
+// maps [data0, data1, data2] -> {timestamp, [file0, file1,...]}
 function sortByTime(data) {
+
 	var dataByTime = {};
 	var i = 0;
     while (i < data.length) {
@@ -48,48 +55,64 @@ function sortByTime(data) {
 	return dataByTime;
 }
 
-function drawTimeline(files) {
+function drawTimeline(dfiles) {
 	
 	var i = 0;
-	var d1 = [];
-	for (var t in files) {
-		var d = files[t];
-		d.forEach(function(file, i){
+	var dpoints = [];
+	for (var time in dfiles) {
+		var files = dfiles[time];
+		files.forEach(function(file, i){
 			if (docs.indexOf(file.type) > -1) {
-				console.log("doc", file.time, file.type);
-				d1.push([file.time, 0]);
+				dpoints.push([file.time, 0]);
 			} else if (img.indexOf(file.type) > -1) {
-				console.log("img", file.time,file.type);
-				d1.push([file.time, 1]);
+				dpoints.push([file.time, 1]);
 			} else if (misc.indexOf(file.type) > -1) {
-				console.log("misc", file.time, file.type);
-				d1.push([file.time, 2]);
+				dpoints.push([file.time, 2]);
 			} else {
-				console.log("somthing else...", file.time,file.type);
-				d1.push([file.time, 3]);
+				dpoints.push([file.time, 3]);
 			}										
 		});
 		i++;
 	}
 	
-	$.plot("#timeline", [d1], {
-			xaxis: { mode: "time" },
-			yaxis: {
-				ticks: [[-1,""], [0, "doc"], [1, "img"], [2, "misc"], [3,""]] 
-			},
-			lines: { 
-				show: false
-			},
-			points: {
-				show: true,
-				radius: 20
-			},
-			hooks: { 
-				draw: [raw] 
-			}
+	var plot = $.plot("#timeline", [dpoints], {
+		xaxis: { mode: "time" },
+		yaxis: {
+			ticks: [[-1,""], [0, "doc"], [1, "img"], [2, "misc"], [3,""]] 
+		},
+		lines: { 
+			show: false
+		},
+		points: {
+			show: true,
+			radius: 20
+		},
+		grid: {
+			hoverable: true,
+			clickable: true
+		},
+		hooks: { 
+			draw: [raw] 
+		}
+	});
+	
+	$("#timeline").bind("plothover", function (event, pos, item) {
+		if (item) {
+			var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
+			$("#hoverdata").text(str);
+		}
+	});
+
+	$("#timeline").bind("plotclick", function (event, pos, item) {	
+		if (item) {
+			$("#clickdata").text(" - click point " + item.dataIndex);
+			plot.highlight(item.series, item.datapoint);
+			window.open('index.html', '_blank'); //will change to something specific to the file
+		}
 	});
 }
 
+// customize the way data points are drawn, by color
 function raw(plot, ctx) {
     var data = plot.getData();
     var axes = plot.getAxes();
@@ -120,7 +143,6 @@ function raw(plot, ctx) {
   };  
 
 $(document).ready(function() {
-	// Load the Visualization API and the piechart package.
 	 processFile("Asdf");
 });
  
