@@ -120,6 +120,8 @@ app.get('/list_files', function(req,res) {
   db.close();
 });
 
+
+
 // Need to be entered by user at some point
 //var toolPath = '/home/eugene/Desktop/sleuthkit-4.1.2/tools/';
 //var imagePath = __dirname + '/../images/';
