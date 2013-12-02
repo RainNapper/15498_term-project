@@ -91,8 +91,11 @@ app.get('/load_db', function(req,res) {
   });
 });
 
+
+
 app.get('/list_files', function(req,res) {
   var db = new sqlite3.Database(db_path);
+  console.log("test");
   var exists = fs.existsSync(db_path);
   var files = [];
   db.serialize(function() {
@@ -102,11 +105,17 @@ app.get('/list_files', function(req,res) {
     }
     else
     {
-      db.each("SELECT * FROM tsk_files",
+      db.each("SELECT ctime, name FROM tsk_files "+
+              "ORDER BY ctime",
         // Callback
         function(err,row)
         {
-          files.push(row);
+          var converted = {
+            'time' : new Date(row.ctime * 1000),
+            'type' : '.jpg',
+            'name' : row.name
+          };
+          files.push(converted);
         },
         // Completion callback
         function()
