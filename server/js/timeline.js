@@ -2,6 +2,7 @@ var highlighted = [];
 var plot;
 
 function drawTimeline(dfiles) {
+  console.log("test");
 	var i = 0;
 	var dpoints = [];
 	for (var time in dfiles) {
