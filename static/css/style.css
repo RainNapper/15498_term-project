@@ -71,7 +71,7 @@ body {
 
 #searchForm {
 	position: relative;
-	left: 80%;
+	left: 10%;
 }
 
 input {
@@ -83,3 +83,9 @@ input {
 ::-webkit-input-placeholder {font-style: italic}
 :-moz-placeholder {font-style: italic}
 :-ms-input-placeholder {font-style: italic}
+
+
+.zoom {
+	position: relative;
+	cursor: pointer;
+}

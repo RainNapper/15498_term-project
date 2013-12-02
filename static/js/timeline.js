@@ -49,16 +49,18 @@ function drawTimeline(dfiles) {
 		
 	};
 	
-	plot = $.plot("#timeline", [dpoints], options);
+	var timeline = $("#timeline");
+	
+	plot = $.plot(timeline, [dpoints], options);
 
-	/*$("#timeline").bind("plothover", function (event, pos, item) {
+	/*$(timeline).bind("plothover", function (event, pos, item) {
 		if (item) {
 			var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
 			$("#hoverdata").text(str);
 		}
 	});*/
 
-	$("#timeline").bind("plotclick", function (event, pos, item) {	
+	timeline.bind("plotclick", function (event, pos, item) {	
 		if (item) {
 			if (highlighted.indexOf(item.dataIndex) > -1) {
 				plot.unhighlight(item.series, item.datapoint);
@@ -66,13 +68,12 @@ function drawTimeline(dfiles) {
 			} else {
 				plot.highlight(item.series, item.datapoint);
 				highlighted.push(item.dataIndex);
-				//window.open('results.html', '_blank'); //will change to something specific to the file
 			}
 		}
 		
 	});
 	
-	$("#timeline").bind("plotpan", function (event, plot) {
+	timeline.bind("plotpan", function (event, plot) {
 		var axes = plot.getAxes();
 		$(".message").html("Panning to x: "  + axes.xaxis.min.toFixed(2)
 		+ " &ndash; " + axes.xaxis.max.toFixed(2)
@@ -80,12 +81,27 @@ function drawTimeline(dfiles) {
 		+ " &ndash; " + axes.yaxis.max.toFixed(2));
 	});
 
-	$("#timeline").bind("plotzoom", function (event, plot) {
-		var axes = plot.getAxes();
-		$(".message").html("Zooming to x: "  + axes.xaxis.min.toFixed(2)
-		+ " &ndash; " + axes.xaxis.max.toFixed(2)
-		+ " and y: " + axes.yaxis.min.toFixed(2)
-		+ " &ndash; " + axes.yaxis.max.toFixed(2));
+	// timeline.bind("plotzoom", function (event, plot) {
+		// var axes = plot.getAxes();
+		// $(".message").html("Zooming to x: "  + axes.xaxis.min.toFixed(2)
+		// + " &ndash; " + axes.xaxis.max.toFixed(2)
+		// + " and y: " + axes.yaxis.min.toFixed(2)
+		// + " &ndash; " + axes.yaxis.max.toFixed(2));
+	// });
+	
+	
+	$("<button type='button' class='zoom' id='zoom-in'> zoom in </button>")
+	.appendTo(timeline)
+	.click(function (event) {
+		event.preventDefault();
+		plot.zoom();
+	});
+	
+	$("<button type='button' class='zoom' id='zoom-out'> zoom out </button>")
+	.appendTo(timeline)
+	.click(function (event) {
+		event.preventDefault();
+		plot.zoomOut();
 	});
 
 }
@@ -118,4 +134,4 @@ function raw(plot, ctx) {
             ctx.fill();
         }    
     }
- }
+}
