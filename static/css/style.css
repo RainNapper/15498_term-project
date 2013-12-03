@@ -10,6 +10,10 @@ html, body, div, h1, h2, h3, em, ul, li, section {
 	vertical-align: baseline;
 }
 
+html {
+  height: 100%;
+}
+
 ul {
 	list-style: none;
 }
@@ -36,7 +40,7 @@ body {
 
 #content{
 	position: relative;
-	margin: 100px;
+	margin: 50px;
 	display: block;
 }
 
@@ -47,19 +51,39 @@ body {
 	width: 70%;
 }
 
-.tl-container {
+input, button {
+	font-size: 20px;
+	color: #fff;
+	background: #2bf;;
+	font-style: normal;
+}
+
+.container {
+	position: absolute;
 	box-sizing: border-box;
-	width: 850px;
+	width: 75%;
 	height: 450px;
 	padding: 20px 15px 15px 15px;
-	margin: 15px auto 30px auto;
+	margin: 30px auto;
 	border: 1px solid #ddd;
+	border-radius: 5px;
 	background: #fff;
+	-moz-border-radius: 5px;
 	box-shadow: 0 3px 10px rgba(0,0,0,0.15);
 	-o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 	-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 	-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+#tl {
+	left: 0;
+	width: 75%;
+}
+
+#search {
+	right: 0;
+	width: 23%;
 }
 
 .tl-placeholder {
@@ -69,23 +93,24 @@ body {
 	line-height: 1.2em;
 }
 
-#searchForm {
-	position: relative;
-	left: 10%;
+.zoom {
+	float: right;
+	cursor: pointer;
 }
 
-input {
-	font-size: 20px;
-	color: #000;
-	font-style: normal;
+
+#filterForm {
+	position: relative;
+	float: left;
+	left: 10px;
 }
+
+
+
+
 
 ::-webkit-input-placeholder {font-style: italic}
 :-moz-placeholder {font-style: italic}
 :-ms-input-placeholder {font-style: italic}
 
 
-.zoom {
-	position: relative;
-	cursor: pointer;
-}

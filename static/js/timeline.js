@@ -52,6 +52,7 @@ function drawTimeline(dfiles) {
 	var timeline = $("#timeline");
 	
 	plot = $.plot(timeline, [dpoints], options);
+	
 
 	/*$(timeline).bind("plothover", function (event, pos, item) {
 		if (item) {
@@ -89,7 +90,7 @@ function drawTimeline(dfiles) {
 		// + " &ndash; " + axes.yaxis.max.toFixed(2));
 	// });
 	
-	
+	// add zoom buttons
 	$("<button type='button' class='zoom' id='zoom-in'> zoom in </button>")
 	.appendTo(timeline)
 	.click(function (event) {

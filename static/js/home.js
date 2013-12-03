@@ -25,10 +25,6 @@ function makeFakeData() {
 }
 
 function processFile(filename) {
-
-	alert(filename);
-	//do something with the file name
-	
 	var data = makeFakeData();
 	
 	
