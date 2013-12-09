@@ -17,6 +17,14 @@ function classifyFile(type) {
   return -1;
 }
 
+var daysOfWeek = [[0, 'Sunday'], [1, 'Monday'], [2, 'Tuesday'], [3, 'Wednesday'],
+              [4, 'Thursday'] , [5, 'Friday'], [6, 'Saturday']];
+
+function xAxisLabelGenerator(x)
+{
+    return xAxisLabels[x];
+}
+
 function drawTimeline(dfiles) {
   console.log("test");
   var i = 0;
@@ -34,7 +42,8 @@ function drawTimeline(dfiles) {
   
   var options = {
     xaxis: { 
-      mode: "time" 
+      mode: "time",
+      //ticks: daysOfWeek
     },
     yaxis: {
       ticks: [[-1,""], [0, ".doc"], [1, ".img"], [2, ".misc"], [3,""]] ,
@@ -68,19 +77,22 @@ function drawTimeline(dfiles) {
   plot = $.plot(timeline, [dpoints], options);
   
 
-  /*$(timeline).bind("plothover", function (event, pos, item) {
+  $(timeline).bind("plothover", function (event, pos, item) {
     if (item) {
+      
       var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
       $("#hoverdata").text(str);
     }
-  });*/
+  });
 
   timeline.bind("plotclick", function (event, pos, item) {  
     if (item) {
       if (highlighted.indexOf(item.dataIndex) > -1) {
+        console.log("lalal");
         plot.unhighlight(item.series, item.datapoint);
         highlighted.splice(highlighted.indexOf(item.datapoint), 1);
       } else {
+        console.log("unhighlited");
         plot.highlight(item.series, item.datapoint);
         highlighted.push(item.dataIndex);
       }
