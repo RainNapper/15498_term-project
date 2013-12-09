@@ -57,6 +57,7 @@ function drawTimeline(dfiles) {
       radius: 20
     },
     grid: {
+      hoverable: true,
       clickable: true
     },
     zoom: {
@@ -77,27 +78,28 @@ function drawTimeline(dfiles) {
   plot = $.plot(timeline, [dpoints], options);
   
 
-  $(timeline).bind("plothover", function (event, pos, item) {
+  /*$(timeline).bind("plothover", function (event, pos, item) {
     if (item) {
-      
       var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
       $("#hoverdata").text(str);
     }
-  });
+  });*/
 
   timeline.bind("plotclick", function (event, pos, item) {  
-    if (item) {
-      if (highlighted.indexOf(item.dataIndex) > -1) {
-        console.log("lalal");
-        plot.unhighlight(item.series, item.datapoint);
-        highlighted.splice(highlighted.indexOf(item.datapoint), 1);
-      } else {
+   if (item) {
+      plot.highlight(item.series, item.datapoint);
+		}
+    /*if (item) {
+      if (highlighted.indexOf(item.dataIndex) < 0) {
         console.log("unhighlited");
         plot.highlight(item.series, item.datapoint);
         highlighted.push(item.dataIndex);
+      } else {
+         console.log("lalal");
+        plot.unhighlight(item.series, item.datapoint);
+        highlighted.splice(highlighted.indexOf(item.datapoint), 1);
       }
-    }
-    
+    }*/
   });
   
   /*timeline.bind("plotpan", function (event, plot) {
