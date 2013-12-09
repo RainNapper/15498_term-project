@@ -78,19 +78,6 @@ function get_files()
     }
   });
   return result;
-  /*
-  return $.get('/list_files', null)
-    .done(function(res)
-    {
-      if(res.success)
-      {
-        $('#output').val(res.file_list);
-        return res.file_list;
-      }
-      else
-        alert("Boo failure!");
-    });
-    */
 }
 
 function list_files()
