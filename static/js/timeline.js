@@ -88,21 +88,23 @@ function drawTimeline(dfiles) {
     
   });
   
-  timeline.bind("plotpan", function (event, plot) {
+  /*timeline.bind("plotpan", function (event, plot) {
     var axes = plot.getAxes();
     $(".message").html("Panning to x: "  + axes.xaxis.min.toFixed(2)
     + " &ndash; " + axes.xaxis.max.toFixed(2)
     + " and y: " + axes.yaxis.min.toFixed(2)
     + " &ndash; " + axes.yaxis.max.toFixed(2));
   });
+  
 
-  // timeline.bind("plotzoom", function (event, plot) {
-    // var axes = plot.getAxes();
-    // $(".message").html("Zooming to x: "  + axes.xaxis.min.toFixed(2)
-    // + " &ndash; " + axes.xaxis.max.toFixed(2)
-    // + " and y: " + axes.yaxis.min.toFixed(2)
-    // + " &ndash; " + axes.yaxis.max.toFixed(2));
-  // });
+  timeline.bind("plotzoom", function (event, plot) {
+    var axes = plot.getAxes();
+    $(".message").html("Zooming to x: "  + axes.xaxis.min.toFixed(2)
+    + " &ndash; " + axes.xaxis.max.toFixed(2)
+    + " and y: " + axes.yaxis.min.toFixed(2)
+    + " &ndash; " + axes.yaxis.max.toFixed(2));
+  });
+  */
   
   // add zoom buttons
   $("<button type='button' class='zoom' id='zoom-in'> zoom in </button>")

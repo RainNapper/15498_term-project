@@ -1,4 +1,4 @@
-var debug = 0;
+var debug = 1;
 
 // time must be in Javascript Date format
 function fakeData(time, type) {
@@ -81,6 +81,8 @@ function list_files(res)
 }
 
 $(document).ready(function() {
+  drawTimeline([]);
   $('#load_db').click(load_db);
+
   //$('#list_files').click(list_files);
 });

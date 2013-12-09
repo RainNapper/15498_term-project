@@ -54,8 +54,12 @@ body {
 input, button {
 	font-size: 20px;
 	color: #fff;
-	background: #2bf;;
+	background: #2bf;
 	font-style: normal;
+}
+
+input[type="submit"], button {
+    cursor: pointer;
 }
 
 .container {
@@ -95,7 +99,6 @@ input, button {
 
 .zoom {
 	float: right;
-	cursor: pointer;
 }
 
 
@@ -104,10 +107,6 @@ input, button {
 	float: left;
 	left: 10px;
 }
-
-
-
-
 
 ::-webkit-input-placeholder {font-style: italic}
 :-moz-placeholder {font-style: italic}
