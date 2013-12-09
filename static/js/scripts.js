@@ -29,8 +29,7 @@ function select_image()
 {
   $.get('/select_image', { img_name : $('#img_list').val() })
     .done(function(res) {
-        if(res.success) alert("Yay success!");
-        else alert("Boo failure!");
+        if(!res.success) alert("Something failed!");
     });
 }
 

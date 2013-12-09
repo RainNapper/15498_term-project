@@ -33,9 +33,9 @@ app.get('/get_images', function(req, res) {
 // - success: boolean if the file was valid or not
 // - output: Raw string of output. May or may not be useful
 app.get('/select_image', function(req, res) {
-  console.log('images: '+available_images);
+  console.log('images: '+images);
   console.log('requested: '+req.query.img_name);
-  if(available_images.indexOf(req.query.img_name) === -1)
+  if(images.indexOf(req.query.img_name) === -1)
   {
     target_img = null
     found_img = false;
@@ -59,7 +59,7 @@ app.get('/load_db', function(req,res) {
       output.push(stdout);
     });
 
-  cmd = 'tsk_loaddb -d '+db_path+' '+target_img;
+  cmd = 'tsk_loaddb -d '+db_path+' images/'+target_img;
   console.log('Running cmd: '+cmd);
   output = [];
   var command = exec(cmd,
@@ -78,12 +78,18 @@ app.get('/load_db', function(req,res) {
 });
 
 
+function build_query(req)
+{
+  return "SELECT ctime, name FROM tsk_files "+
+         "ORDER BY ctime";
+}
 
-app.get('/list_files', function(req,res) {
+
+app.get('/get_files', function(req,res) {
   var db = new sqlite3.Database(db_path);
-  console.log("test");
   var exists = fs.existsSync(db_path);
   var files = [];
+  var query = build_query(req);
   db.serialize(function() {
     if(!exists)
     {
@@ -91,13 +97,14 @@ app.get('/list_files', function(req,res) {
     }
     else
     {
-      db.each("SELECT ctime, name FROM tsk_files "+
-              "ORDER BY ctime",
+      db.each(query,
         // Callback
         function(err,row)
         {
+          if(row.ctime === null || row.ctime === 0)
+            return;
           var converted = {
-            'time' : new Date(row.ctime * 1000),
+            'time' : row.ctime,
             'type' : '.jpg',
             'name' : row.name
           };
