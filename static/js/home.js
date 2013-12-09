@@ -59,34 +59,24 @@ function load_db()
 
 function get_files()
 {
-  var result = null;
-  var scriptUrl = '/list_files';
-  $.ajax({
-    url: scriptUrl,
-    type: 'get',
-    dataType: 'html',
-    async: false,
-    success: function(res) {
-      resJson = JSON.parse(res);
-      if(resJson.success)
-      {
-        $('#output').val(res);
-        result = resJson.file_list;
-      }
-      else
-        alert("Boo failure!");
-    }
-  });
-  return result;
+  $.get('/get_files',null)
+   .done(list_files);
 }
 
-function list_files()
+function list_files(res)
 {
-  output = get_files();
+  if(res.success)
+  {
+    $('#output').val(JSON.stringify(res));
+    files = res.file_list;
+  }
+  else
+    alert("Something failed!");
+
   if (debug) {
     drawTimeline(makeFakeData());
   } else {
-    drawTimeline(output);
+    drawTimeline(files);
   }
 }
 

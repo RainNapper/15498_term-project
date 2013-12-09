@@ -7,11 +7,12 @@ var highlighted = [];
 var plot;
 
 function classifyFile(type) {
-  if($.inArray(type,docs))
+  console.log("classifying filetype: "+type);
+  if($.inArray(type,docs) !== -1)
     return 0;
-  if($.inArray(type,img))
+  if($.inArray(type,img) !== -1)
     return 1;
-  if($.inArray(type,misc))
+  if($.inArray(type,misc) !== -1)
     return 2;
   return -1;
 }
@@ -23,7 +24,9 @@ function drawTimeline(dfiles) {
   
   if (dfiles !== null) {
     dfiles.forEach(function(file, i){
-      dpoints.push([file.time, classifyFile(file.type)]);
+      var jsTime = new Date(file.time);
+      console.log(classifyFile(file.type));
+      dpoints.push([jsTime, classifyFile(file.type)]);
       console.log(file.time);
       console.log(file.name);
     });

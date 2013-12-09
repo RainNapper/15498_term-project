@@ -78,12 +78,18 @@ app.get('/load_db', function(req,res) {
 });
 
 
+function build_query(req)
+{
+  return "SELECT ctime, name FROM tsk_files "+
+         "ORDER BY ctime";
+}
 
-app.get('/list_files', function(req,res) {
+
+app.get('/get_files', function(req,res) {
   var db = new sqlite3.Database(db_path);
-  console.log("test");
   var exists = fs.existsSync(db_path);
   var files = [];
+  var query = build_query(req);
   db.serialize(function() {
     if(!exists)
     {
@@ -91,17 +97,14 @@ app.get('/list_files', function(req,res) {
     }
     else
     {
-      db.each("SELECT ctime, name FROM tsk_files "+
-              "ORDER BY ctime",
+      db.each(query,
         // Callback
         function(err,row)
         {
-          console.log(row.ctime);
           if(row.ctime === null || row.ctime === 0)
             return;
-          console.log("adding");
           var converted = {
-            'time' : new Date(row.ctime * 1000),
+            'time' : row.ctime,
             'type' : '.jpg',
             'name' : row.name
           };
