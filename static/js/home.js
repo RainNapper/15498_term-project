@@ -95,7 +95,6 @@ function get_files()
 
 function list_files()
 {
-  alert('boo');
   output = get_files();
   drawTimeline(output);
 }
@@ -103,5 +102,4 @@ function list_files()
 $(document).ready(function() {
   $('#load_db').click(load_db);
   $('#list_files').click(list_files);
-  //$('#list_files').click(alert("test2"));
 });

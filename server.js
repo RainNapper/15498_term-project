@@ -9,8 +9,7 @@ var TSKTools = [["fsstat", "fstools/"], ["blkstat", "fstools/"]];
 
 app.use(express.static(__dirname));
 
-var IMAGE_REGEX = /\S*\.(dd|raw)/g;
-var available_images = [];
+var images = [];
 var db_path = 'target_img_db.db';
 var target_img = "";
 
@@ -22,25 +21,10 @@ var target_img = "";
 // - imgs: List of available images in /images directory
 // - output: Raw string of output. May or may not be useful
 app.get('/get_images', function(req, res) {
-  cmd = 'ls ' + __dirname+'/images/*';
-  console.log('Running cmd: '+cmd);
-  output = [];
-  var command = exec(cmd,
-    function(error,stdout,stderr) {
-      console.log('ERROR: '+error);
-      available_images = stdout.match(IMAGE_REGEX);
-      console.log(available_images);
-      //available_images = available_images.filter(isNotEmpty);
-      output.push(stdout);
-    });
-
-  command.on('close', function(code) {
-    if (code === 0)
-      res.json({imgs : available_images,
-                output : output});
-    else
-      res.send(500); // when the script fails, generate a Server Error HTTP response
-  });
+  images = fs.readdirSync('images')
+  console.log('Found images: '+images);
+  res.json({imgs: images,
+            output: "Found images: "+images});
 });
 
 // req type:
