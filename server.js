@@ -22,7 +22,7 @@ var target_img = "";
 // - imgs: List of available images in /images directory
 // - output: Raw string of output. May or may not be useful
 app.get('/get_images', function(req, res) {
-  cmd = 'ls ' + __dirname+'/../images/*';
+  cmd = 'ls ' + __dirname+'/images/*';
   console.log('Running cmd: '+cmd);
   output = [];
   var command = exec(cmd,

@@ -1,7 +1,3 @@
-//file extensions
-var docs = ['.doc', '.pdf', '.txt', '.ppt'];
-var img = ['.jpg', '.png'];
-var misc = ['.log'];
 
 var highlighted = [];
 var plot;
