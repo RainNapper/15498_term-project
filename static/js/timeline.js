@@ -20,19 +20,22 @@ function drawTimeline(dfiles) {
   console.log("test");
   var i = 0;
   var dpoints = [];
-
-  dfiles.forEach(function(file, i){
-    dpoints.push([file.time, classifyFile(file.type)]);
-    console.log(file.time);
-    console.log(file.name);
-  });
+  
+  if (dfiles !== null) {
+    dfiles.forEach(function(file, i){
+      dpoints.push([file.time, classifyFile(file.type)]);
+      console.log(file.time);
+      console.log(file.name);
+    });
+  }
   
   var options = {
     xaxis: { 
       mode: "time" 
     },
     yaxis: {
-      ticks: [[-1,""], [0, "doc"], [1, "img"], [2, "misc"], [3,""]] 
+      ticks: [[-1,""], [0, "doc"], [1, "img"], [2, "misc"], [3,""]] ,
+      zoomRange: false
     },
     lines: { 
       show: false
@@ -45,7 +48,8 @@ function drawTimeline(dfiles) {
       clickable: true
     },
     zoom: {
-      interactive: true
+      interactive: true,
+      amount: 1.5
     },
     pan: {
       interactive: true

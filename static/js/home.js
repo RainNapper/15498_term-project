@@ -1,4 +1,4 @@
-
+var debug = 0;
 
 // time must be in Javascript Date format
 function fakeData(time, type) {
@@ -83,10 +83,14 @@ function get_files()
 function list_files()
 {
   output = get_files();
-  drawTimeline(output);
+  if (debug) {
+    drawTimeline(makeFakeData());
+  } else {
+    drawTimeline(output);
+  }
 }
 
 $(document).ready(function() {
   $('#load_db').click(load_db);
-  $('#list_files').click(list_files);
+  //$('#list_files').click(list_files);
 });
