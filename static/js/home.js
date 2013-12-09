@@ -9,7 +9,7 @@ function fakeData(time, type) {
 
 function makeFakeData() {
   var data = [];
-  var types = ['jpg', 'doc', 'log'];
+  var types = ['.jpg', '.doc', '.log'];
   var i = 0;
   while (i < 5) {
     var time = new Date(2013,Math.floor(Math.random()*12),Math.floor(Math.random()*30));
