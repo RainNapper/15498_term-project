@@ -34,27 +34,6 @@ function select_image()
     });
 }
 
-function load_db()
-{
-  $.get('/load_db', null)
-    .done(function(res) {
-        if(res.success) alert("Yay success!");
-        else alert("Boo failure!");
-    });
-}
-
-function list_files()
-{
-  $.get('/list_files', null)
-    .done(function(res) {
-        if(res.success) {
-          alert("Yay success!");
-          $('#output').val(res.file_list);
-        }
-        else alert("Boo failure!");
-    });
-}
-
 $(function() {
   $('#submit').click(exec_cmd);
 

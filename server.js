@@ -14,6 +14,8 @@ var available_images = [];
 var db_path = 'target_img_db.db';
 var target_img = "";
 
+
+
 // req type:
 // - None
 // res type:
