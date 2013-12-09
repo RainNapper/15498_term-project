@@ -28,7 +28,7 @@ function drawTimeline(dfiles) {
       console.log(classifyFile(file.type));
       dpoints.push([jsTime, classifyFile(file.type)]);
       console.log(file.time);
-      console.log(file.name);
+      console.log(file.type);
     });
   }
   
@@ -37,7 +37,7 @@ function drawTimeline(dfiles) {
       mode: "time" 
     },
     yaxis: {
-      ticks: [[-1,""], [0, "doc"], [1, "img"], [2, "misc"], [3,""]] ,
+      ticks: [[-1,""], [0, ".doc"], [1, ".img"], [2, ".misc"], [3,""]] ,
       zoomRange: false
     },
     lines: { 
@@ -64,7 +64,7 @@ function drawTimeline(dfiles) {
   };
   
   var timeline = $("#timeline");
-  
+
   plot = $.plot(timeline, [dpoints], options);
   
 
@@ -105,22 +105,20 @@ function drawTimeline(dfiles) {
     + " &ndash; " + axes.yaxis.max.toFixed(2));
   });
   */
-  
+     
   // add zoom buttons
-  $("<button type='button' class='zoom' id='zoom-in'> zoom in </button>")
-  .appendTo(timeline)
+  $("#zoom-in")
   .click(function (event) {
     event.preventDefault();
     plot.zoom();
   });
   
-  $("<button type='button' class='zoom' id='zoom-out'> zoom out </button>")
-  .appendTo(timeline)
+  $("#zoom-out")
   .click(function (event) {
     event.preventDefault();
     plot.zoomOut();
   });
-
+  
 }
 
 // customize the way data points are drawn, by color
