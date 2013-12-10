@@ -24,7 +24,7 @@ function drawTimeline(dfiles) {
   
   if (dfiles !== null) {
     dfiles.forEach(function(file, i){
-      var jsTime = new Date(file.time);
+      var jsTime = new Date(file.time*1000);
       console.log(classifyFile(file.type));
       dpoints.push([jsTime, classifyFile(file.type)]);
       console.log(file.time);

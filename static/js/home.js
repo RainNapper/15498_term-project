@@ -1,4 +1,4 @@
-var debug = 1;
+var debug = 0;
 
 // time must be in Javascript Date format
 function fakeData(time, type) {
@@ -59,7 +59,15 @@ function load_db()
 
 function get_files()
 {
-  $.get('/get_files',null)
+  filter = {
+    startTime: new Date("1000/10/30"),
+    endTime: new Date("3000/10/30"),
+    dayOfWeek: 5
+    //startTime: new Date("2003/10/24"),
+    //endTime: new Date("2003/10/25"),
+    //dayOfWeek: 3
+  };
+  $.get('/get_files',filter)
    .done(list_files);
 }
 

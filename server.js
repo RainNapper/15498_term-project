@@ -3,6 +3,7 @@ var exec    = require('child_process').exec;
 var express = require('express');
 var fs      = require('fs');
 var sqlite3 = require('sqlite3').verbose();
+var sql     = require('sql');
 var app     = express();
 
 var TSKTools = [["fsstat", "fstools/"], ["blkstat", "fstools/"]];
@@ -80,8 +81,32 @@ app.get('/load_db', function(req,res) {
 
 function build_query(req)
 {
-  return "SELECT ctime, name FROM tsk_files "+
-         "ORDER BY ctime";
+  var file_db = sql.define({
+    name: 'tsk_files',
+    columns: ['ctime','name']
+  });
+
+  var timeType = file_db.ctime; // Default to creation time for now
+
+  var sTime = new Date(req.startTime).getTime()/1000;
+  var eTime = new Date(req.endTime).getTime()/1000;
+
+  var strftime = sql.functionCallCreator('STRFTIME');
+  var datetime = sql.functionCallCreator('DATETIME');
+  var dayOfWeek = strftime('%w',datetime(timeType,'unixepoch'));
+
+  var queryBase = file_db.select(file_db.star()).from(file_db);
+  var query =
+    queryBase.where(
+        timeType.gte(sTime)
+      .and(
+        timeType.lte(eTime)))
+      .where(
+        dayOfWeek.equals(req.dayOfWeek))
+
+  console.log(query.toString());
+  
+  return query.toString();
 }
 
 
@@ -89,7 +114,7 @@ app.get('/get_files', function(req,res) {
   var db = new sqlite3.Database(db_path);
   var exists = fs.existsSync(db_path);
   var files = [];
-  var query = build_query(req);
+  var query = build_query(req.query);
   db.serialize(function() {
     if(!exists)
     {
@@ -103,6 +128,7 @@ app.get('/get_files', function(req,res) {
         {
           if(row.ctime === null || row.ctime === 0)
             return;
+
           var converted = {
             'time' : row.ctime,
             'type' : '.jpg',
