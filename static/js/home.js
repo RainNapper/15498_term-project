@@ -1,8 +1,9 @@
 var debug = 0;
 
 // time must be in Javascript Date format
-function fakeData(time, type) {
+function fakeData(time, dayofweek, type) {
   this.time = time;
+  this.dow = dayofweek;
   this.type = type;
 }
 
@@ -14,7 +15,7 @@ function makeFakeData() {
   while (i < 5) {
     var time = new Date(2013,Math.floor(Math.random()*12),Math.floor(Math.random()*30));
     var type = Math.floor(Math.random()*types.length);
-    data[i] =  new fakeData(time, types[type]);
+    data[i] =  new fakeData(time, types[type], types[type]);
     i++;
   }
   return data;
