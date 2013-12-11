@@ -60,9 +60,21 @@ function filter() {
   var timeMode = $('#time_type').val();
   var days = [];
   var extensions = [];
-  var startDate = new Date($('#startDateInput').val());
-  var endDate = new Date($('#endDateInput').val());
-
+  var start = [];
+  var end = [];
+  
+  $('#startDate').children().each(function() {
+    start.push($(this).val());
+  });
+  
+  $('#endDate').children().each(function() {
+    end.push($(this).val());
+  });
+  
+  
+  var startDate = new Date(start[1], start[0], start[2]);
+  var endDate = new Date(end[1], end[0], end[2]);
+  
   $('#days_of_week').find('input').each(function(){
     if(this.checked)
       days.push(this.name);
