@@ -17,8 +17,6 @@ function classifyFile(type) {
   return -1;
 }
 
-var daysOfWeek = [[0, 'Sunday'], [1, 'Monday'], [2, 'Tuesday'], [3, 'Wednesday'],
-              [4, 'Thursday'] , [5, 'Friday'], [6, 'Saturday']];
 
 function xAxisLabelGenerator(x)
 {

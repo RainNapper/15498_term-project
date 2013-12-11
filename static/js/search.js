@@ -1,3 +1,9 @@
+var daysOfWeek = [[0, 'Sunday'], [1, 'Monday'], [2, 'Tuesday'], [3, 'Wednesday'],
+              [4, 'Thursday'] , [5, 'Friday'], [6, 'Saturday']];
+              
+var extTypes = [[0, 'doc'], [1, 'img'], [2, 'misc']];             
+              
+
 function toggleForm(){
    $( "#formFilter" ).toggle();
 }
@@ -25,7 +31,23 @@ function displayDateInput(){
 }  
   
 function drawForm(){
-
+  daysOfWeek.forEach(function(day,i) {
+    var checkday = $('<input>').addClass("daysOfWeek")
+                             .attr({"type":"checkbox", "name":day[0],"value":day[1]});
+    var br = $('<br>');
+    console.log(checkday, day[1], br);
+    $('#days_of_week').append(checkday, day[1], br);
+  });
+  
+  extTypes.forEach(function(ext,i) {
+    var checkext = $('<input>').addClass("daysOfWeek")
+                             .attr({"type":"checkbox", "name":ext[0],"value":ext[1]});
+    var br = $('<br>');
+    console.log(checkday, ext[1], br);
+    $('#extensions').append(checkext, ext[1], br);
+  });
+  
+  
 }  
   
 function filter() {
