@@ -88,14 +88,17 @@ function build_query(req)
 
   var query = file_db.select(file_db.star()).from(file_db);
 
+  var time = null;
   // Type of time (created, modified, accessed)
-  var time = file_db.crtime; // Default to creation time for now
-  if(req.timeMode === 1)
-    var time = file_db.mtime;
-  else if(req.timeMode === 2)
-    var time = file_db.atime;
-  else if(req.timeMode === 3)
-    var time = file_db.ctime;
+    console.log('timeMode: '+req.timeMode);
+  if(req.timeMode === '0')
+    time = file_db.crtime; // Default to creation time for now
+  if(req.timeMode === '1')
+    time = file_db.mtime;
+  else if(req.timeMode === '2')
+    time = file_db.atime;
+  else if(req.timeMode === '3')
+    time = file_db.ctime;
 
   // Start and End time range
   var sTime = new Date(req.start).getTime()/1000;
@@ -109,7 +112,8 @@ function build_query(req)
 
   // Days of the week
   var daysFilter = null;
-  if(req.days === {})
+  console.log(typeof req.days);
+  if(typeof req.days === 'undefined')
     console.log("no days");
   else
   {
