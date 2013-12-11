@@ -57,17 +57,9 @@ function load_db()
     });
 }
 
-function get_files()
+function get_all_files()
 {
-  filter = {
-    startTime: new Date("1000/10/30"),
-    endTime: new Date("3000/10/30"),
-    dayOfWeek: 5
-    //startTime: new Date("2003/10/24"),
-    //endTime: new Date("2003/10/25"),
-    //dayOfWeek: 3
-  };
-  $.get('/get_files',filter)
+  $.get('/get_files',{})
    .done(list_files);
 }
 

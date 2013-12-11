@@ -103,9 +103,8 @@ function build_query(req)
 
   var query = file_db.select(file_db.star()).from(file_db);
 
-  var time = null;
   // Type of time (created, modified, accessed)
-    console.log('timeMode: '+req.timeMode);
+  var time = null;
   if(req.timeMode === '0')
     time = file_db.crtime; // Default to creation time for now
   if(req.timeMode === '1')
@@ -119,41 +118,45 @@ function build_query(req)
   var datetime = sql.functionCallCreator('DATETIME');
 
   // Start and End time range
-  var sTimeJs = new Date(req.startTime);
-  var eTimeJs = new Date(req.endTime);
+  if(typeof req.startTime === 'undefined' || typeof req.endTime === 'undefined')
+    console.log("no time range");
+  else
+  {
+    var sTimeJs = new Date(req.startTime);
+    var eTimeJs = new Date(req.endTime);
 
-  startTimeString = format_date(sTimeJs);
-  endTimeString = format_date(eTimeJs);
+    startTimeString = format_date(sTimeJs);
+    endTimeString = format_date(eTimeJs);
 
-  var timeOfDay = strftime('%H:%M:%S',datetime(time,'unixepoch'));
-  var timeFilter =
-    timeOfDay.gte(startTimeString).and(
-    timeOfDay.lte(endTimeString));
-  query = query.where(timeFilter);
+    var timeOfDay = strftime('%H:%M:%S',datetime(time,'unixepoch'));
+    var timeFilter =
+      timeOfDay.gte(startTimeString).and(
+          timeOfDay.lte(endTimeString));
+    query = query.where(timeFilter);
+  }
 
-  var dayOfWeek = strftime('%w',datetime(time,'unixepoch'));
-
-  // Days of the week
-  var daysFilter = null;
-  console.log(typeof req.days);
   if(typeof req.days === 'undefined')
     console.log("no days");
   else
   {
+    // Days of the week
+    var dayOfWeek = strftime('%w',datetime(time,'unixepoch'));
+    var daysFilter = null;
+    console.log(typeof req.days);
     (req.days).forEach(function(day,i){
       console.log(day);
       var nextPart = dayOfWeek.equals(day);
 
       if(daysFilter === null)
-        daysFilter = nextPart;
+      daysFilter = nextPart;
       else
-        daysFilter = daysFilter.or(nextPart);
+      daysFilter = daysFilter.or(nextPart);
     });
     query = query.where(daysFilter);
   }
 
   console.log(query.toString());
-  
+
   return query.toString();
 }
 
@@ -165,31 +168,31 @@ app.get('/get_files', function(req,res) {
   var query = build_query(req.query);
   db.serialize(function() {
     if(!exists)
-    {
-      console.log("Can't find db file");
-    }
+  {
+    console.log("Can't find db file");
+  }
     else
-    {
-      db.each(query,
-        // Callback
-        function(err,row)
-        {
-//          console.log(row.name);
-          var converted = {
-            'time' : row.crtime,
-            'type' : '.jpg',
-            'name' : row.name
-          };
-          files.push(converted);
-        },
-        // Completion callback
-        function()
-        {
-          console.log("Finished");
-          res.json( { success   : true,
-                      file_list : files } );
-        });
-    }
+  {
+    db.each(query,
+      // Callback
+      function(err,row)
+      {
+        //          console.log(row.name);
+        var converted = {
+          'time' : row.crtime,
+      'type' : '.jpg',
+      'name' : row.name
+        };
+        files.push(converted);
+      },
+      // Completion callback
+      function()
+      {
+        console.log("Finished");
+        res.json( { success   : true,
+          file_list : files } );
+      });
+  }
   });
   db.close();
 });
@@ -203,74 +206,8 @@ app.post("/createGame", function(req, res){
   var endDate =  req.body.end;
 
   // send array of files
-	res.send( {success : true, dfiles: []});
+  res.send( {success : true, dfiles: []});
 });
-
-
-// Need to be entered by user at some point
-//var toolPath = '/home/eugene/Desktop/sleuthkit-4.1.2/tools/';
-//var imagePath = __dirname + '/../images/';
-/*
-function parse_cmd (req) {
-  var toolPath = req.query.toolPath;
-  // Add trailing '/' if necessarry
-  if (toolPath.slice (-1) !== "/") toolPath = toolPath + "/";
-
-  // TODO - validate image path and tool path
-
-  // Ignore mount for now - not yet implemented
-  if (req.query.cmd === "mount") return;
-  
-  var cmdParts = req.query.cmd.split (' ');
-  var cmd = cmdParts[0];        // the command
-  var cmdOptions = cmdParts.slice (1);  // any trailing options
-
-  // TODO - check if command is TSK tool, so that we can 
-  // inject the image path into the command
-  var isTSKTool = false;
-  for (var i = 0; i < TSKTools.length; i++) {
-    if (cmd === TSKTools[i][0]) {
-      cmd = toolPath + TSKTools[i][1] + cmd;
-      isTSKTool = true;
-    }
-  }
- 
-  // inject image path into command
-  if (isTSKTool === true)
-    return cmd + " " + req.query.imagePath + " " + cmdOptions.join(" ");
-  else
-    return null;
-}
-
-app.get('/exec_cmd', function(req, res) {
-  console.log("Running command: "+req.query.cmd);
-  //console.log("On target: "+req.query.target);
-  console.log("Image path: " + req.query.imagePath);
-  console.log("TSK Tool path: " + req.query.toolPath);
-
-  console.log("Executing parsed command: "+cmd);
-
-  cmd = parse_cmd(req);
-  output = [];
-
-  var command = exec(cmd,
-    function(error,stdout,stderr) {
-      console.log('ERROR: '+error);
-      output.push(stdout);
-    });
-
-  command.on('close', function(code) {
-    if (code === 0)
-    {
-      res.send(Buffer.concat(output));
-    }
-    else
-    {
-      res.send(500); // when the script fails, generate a Server Error HTTP response
-    }
-  });
-});
-*/
 
 app.listen(3000);
 
