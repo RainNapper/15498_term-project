@@ -92,6 +92,14 @@ function list_files(res)
 $(document).ready(function() {
   drawTimeline([]);
   $('#load_db').click(load_db);
-
-  //$('#list_files').click(list_files);
+  $('.date').DatePicker({
+    format: 'Y/m/d',
+    flat: true,
+    date: '2008-07-31',
+    current: '2008-07-31',
+    calendars: 1,
+    starts: 1,
+    onChange: function(formated, dates){
+    }
+  });
 });

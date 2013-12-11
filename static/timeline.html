@@ -4,12 +4,14 @@
     <title>Deanna, Dongho, James, Mansfield</title>
     <link href="css/reset.css" rel="stylesheet" type="text/css">
     <link href="css/style.css" rel="stylesheet" type="text/css">
-    <script src="js/jquery-1.9.0.js" type="text/javascript"></></script>
+    <link href="js/datepicker/css/datepicker.css" rel="stylesheet" type="text/css">
+    <script src="js/jquery-1.9.0.js" type="text/javascript"></script>
     <script src="js/flot/jquery.flot.js" type="text/javascript"></script>
     <script src="js/flot/jquery.flot.time.js" type="text/javascript"></script>
     <script src="js/flot/jquery.flot.symbol.js" type="text/javascript"></script>
     <script src="js/flot/jquery.flot.navigate.js" type="text/javascript"></script>
     <script src="js/flot/jquery.flot.resize.js" type="text/javascript"></script>
+    <script src="js/datepicker/js/datepicker.js" type="text/javascript"></script>
     
     <script src="js/home.js"></script>
     <script src="js/timeline.js"></script>
@@ -34,7 +36,32 @@
       </div>
       <div id="search" class="container">
         <form id="filterForm" action="javascript:search()">
-          <button> Filter Results </button>
+          <div id="days_of_week">
+            <input type="checkbox" class="day_of_week"  name="Monday" value=0>Monday<br>
+            <input type="checkbox" class="day_of_week"  name="Tuesday" value=1>Tuesday<br>
+            <input type="checkbox" class="day_of_week"  name="Wednesday" value=2>Wednesday<br>
+            <input type="checkbox" class="day_of_week"  name="Thursday" value=3>Thursday<br>
+            <input type="checkbox" class="day_of_week"  name="Friday" value=4>Friday<br>
+            <input type="checkbox" class="day_of_week"  name="Saturday" value=5>Saturday<br>
+            <input type="checkbox" class="day_of_week" name="Sunday" value=6>Sunday<br>
+          </div>
+          <select id="time_type"><br>
+            <option value=0>Created</option>
+            <option value=1>Last Modified</option>
+          </select>
+          <div id="date_range">
+            <div>
+              Date Range:
+            </div>
+            Start Date:
+            <p class='date' id='start_date'>
+            </p>
+            End Date:
+            <p class='date' id='end_date'>
+            </p>
+          </div>
+
+
           <!--<input id="search-input" type="text" name="searchInput" placeholder="Search for a file">
           <input type="submit" value="Submit">-->
         </form>
