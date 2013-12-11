@@ -64,10 +64,7 @@ input[type="submit"], button {
 	color: #fff;
 	background: #2bf;
 	font-style: normal;
-}
-
-input[type="submit"], button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .container {
@@ -110,13 +107,17 @@ input[type="submit"], button {
 	position: relative;
 	float: left;
 	left: 10px;
-  /*display: none;*/
+  display: none;
 }
 
 .dayOfWeek {
   display:inline;
   position:relative;
   float: top;
+}
+
+.dateInput {
+/*  max-width: 20px;*/
 }
 
 ::-webkit-input-placeholder {font-style: italic}

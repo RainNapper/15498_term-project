@@ -51,15 +51,20 @@
           </div>
 
           <div id="date_range">            
-            <div class="datePick" id="startDate"> Start Date: 
-              <input id="startDateInput" type="text" name="dateInput" placeholder="mm/dd/yy">
-              <p class='date' id='startDatePick'></p>
-            </div>
+            <div id="startDate" class="datePick"> Start Date: 
+              <input type="text" class="dateInput" name="startMonth" placeholder="mm" onkeyup="next(this, 'startDay');" size="2" maxlength="2">/
+              <input type="text" class="dateInput" name="startDay" placeholder="dd" onkeyup="next(this, 'startYear');" size="2" maxlength="2">/
+              <input type="text" class="dateInput" name="startYear" placeholder="yy" onkeyup="next(this, '');" size="4" maxlength="4">
+           </div>
             
             <div class="datePick" id="endDate"> End Date: 
-              <input id="endDateInput" type="text" name="dateInput" placeholder="mm/dd/yy"
-              onclick="javascript:displayDateInput()">
-              <p class='date' id='endDatePick'></p>
+              <input type="text" class="dateInput" name="endMonth" placeholder="mm" onkeyup="next(this,'endDay');" size="2" maxlength="2">/
+              <input type="text" class="dateInput" name="endDay" placeholder="dd" onkeyup="next(this,'endYear');" size="2" maxlength="2">/
+              <input type="text" class="dateInput" name="endYear" placeholder="yy" onkeyup="next(this,'');" size="4" maxlength="4">
+              <!-- <input type="text" name="dateInput" placeholder="mm">/
+              <input type="text" name="dateInput" placeholder="dd">/
+              <input type="text" name="dateInput" placeholder="yy"> 
+              <p class='date' id='endDatePick'></p> -->
             </div>
           </div>
 
