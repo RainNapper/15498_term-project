@@ -78,6 +78,21 @@ app.get('/load_db', function(req,res) {
   });
 });
 
+function format_date(d)
+{
+  var hours = d.getHours();
+  var mins = d.getMinutes();
+  var secs = d.getSeconds();
+
+  if(hours < 10)
+    hours = "0"+hours;
+  if(mins < 10)
+    mins = "0"+mins;
+  if(secs < 10)
+    secs = "0"+secs;
+
+  return hours+':'+mins+':'+secs;
+}
 
 function build_query(req)
 {
@@ -100,15 +115,23 @@ function build_query(req)
   else if(req.timeMode === '3')
     time = file_db.ctime;
 
-  // Start and End time range
-  var sTime = new Date(req.start).getTime()/1000;
-  var eTime = new Date(req.end).getTime()/1000;
-
   var strftime = sql.functionCallCreator('STRFTIME');
   var datetime = sql.functionCallCreator('DATETIME');
+
+  // Start and End time range
+  var sTimeJs = new Date(req.startTime);
+  var eTimeJs = new Date(req.endTime);
+
+  startTimeString = format_date(sTimeJs);
+  endTimeString = format_date(eTimeJs);
+
+  var timeOfDay = strftime('%H:%M:%S',datetime(time,'unixepoch'));
+  var timeFilter =
+    timeOfDay.gte(startTimeString).and(
+    timeOfDay.lte(endTimeString));
+  query = query.where(timeFilter);
+
   var dayOfWeek = strftime('%w',datetime(time,'unixepoch'));
-  var dayOfWeekFilter = time.gte(sTime).and(time.lte(eTime));
-  query = query.where(dayOfWeekFilter);
 
   // Days of the week
   var daysFilter = null;

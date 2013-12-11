@@ -58,8 +58,8 @@ function filter() {
   var timeMode = $('#time_type').val();
   var days = [];
   var extensions = [];
-  var startDate = new Date($('#startDateInput').val());
-  var endDate = new Date($('#endDateInput').val());
+  var startTime = Date.parse($('#startTimeInput').val());
+  var endTime = Date.parse($('#endTimeInput').val());
 
   $('#days_of_week').find('input').each(function(){
     if(this.checked)
@@ -75,8 +75,8 @@ function filter() {
 	var filter = {"timeMode": timeMode,
            "days": days,
            "extensions": extensions,
-           "start": startDate,
-           "end": endDate};
+           "startTime": startTime,
+           "endTime": endTime};
   
   if(debug || true)
     console.log('Filter Request:',filter);
