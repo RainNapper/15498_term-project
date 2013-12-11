@@ -71,32 +71,38 @@ function filter() {
     end.push($(this).val());
   });
   
-  
-  var startDate = new Date(start[1], start[0], start[2]);
-  var endDate = new Date(end[1], end[0], end[2]);
-  
-  $('#days_of_week').find('input').each(function(){
-    if(this.checked)
-      days.push(this.name);
-  });
-  
-  $('#extensions').find('input').each(function(){
-    if(this.checked)
-      days.push(this.name);
-  });
-  
-
-	var filter = {"timeMode": timeMode,
-           "days": days,
-           "extensions": extensions,
-           "start": startDate,
-           "end": endDate};
-  
-  if(debug || true)
-    console.log('Filter Request:',filter);
+  if (!debug && start[0].length !== 2 && start[1].length !== 2 && start[2].length!== 4 )
+    alert("Invalid start date");  
+  if (!debug && start[0].length !== 2 && start[1].length !== 2 && start[2].length!== 4)
+    alert("Invalid end date");  
+  else {
+    var startDate = new Date(start[1], start[0], start[2]);
+    var endDate = new Date(end[1], end[0], end[2]);
     
-  $.get('/get_files',filter)
-   .done(list_files);
+    $('#days_of_week').find('input').each(function(){
+      if(this.checked)
+        days.push(this.name);
+    });
+    
+    $('#extensions').find('input').each(function(){
+      if(this.checked)
+        days.push(this.name);
+    });
+    
+
+    var filter = {"timeMode": timeMode,
+             "days": days,
+             "extensions": extensions,
+             "start": startDate,
+             "end": endDate};
+    
+    if(debug || true)
+      console.log('Filter Request:',filter);
+      
+    $.get('/get_files',filter)
+     .done(list_files);
+     
+   }
 }
 
 

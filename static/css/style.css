@@ -117,7 +117,7 @@ input[type="submit"], button {
 }
 
 .dateInput {
-/*  max-width: 20px;*/
+  max-width: 30px;
 }
 
 ::-webkit-input-placeholder {font-style: italic}
