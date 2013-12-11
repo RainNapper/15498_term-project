@@ -83,26 +83,47 @@ function build_query(req)
 {
   var file_db = sql.define({
     name: 'tsk_files',
-    columns: ['ctime','name']
+    columns: ['ctime','atime','mtime','crtime','name']
   });
 
-  var timeType = file_db.ctime; // Default to creation time for now
+  var query = file_db.select(file_db.star()).from(file_db);
 
-  var sTime = new Date(req.startTime).getTime()/1000;
-  var eTime = new Date(req.endTime).getTime()/1000;
+  // Type of time (created, modified, accessed)
+  var time = file_db.crtime; // Default to creation time for now
+  if(req.timeMode === 1)
+    var time = file_db.mtime;
+  else if(req.timeMode === 2)
+    var time = file_db.atime;
+  else if(req.timeMode === 3)
+    var time = file_db.ctime;
+
+  // Start and End time range
+  var sTime = new Date(req.start).getTime()/1000;
+  var eTime = new Date(req.end).getTime()/1000;
 
   var strftime = sql.functionCallCreator('STRFTIME');
   var datetime = sql.functionCallCreator('DATETIME');
-  var dayOfWeek = strftime('%w',datetime(timeType,'unixepoch'));
+  var dayOfWeek = strftime('%w',datetime(time,'unixepoch'));
+  var dayOfWeekFilter = time.gte(sTime).and(time.lte(eTime));
+  query = query.where(dayOfWeekFilter);
 
-  var queryBase = file_db.select(file_db.star()).from(file_db);
-  var query =
-    queryBase.where(
-        timeType.gte(sTime)
-      .and(
-        timeType.lte(eTime)))
-      .where(
-        dayOfWeek.equals(req.dayOfWeek))
+  // Days of the week
+  var daysFilter = null;
+  if(req.days === {})
+    console.log("no days");
+  else
+  {
+    (req.days).forEach(function(day,i){
+      console.log(day);
+      var nextPart = dayOfWeek.equals(day);
+
+      if(daysFilter === null)
+        daysFilter = nextPart;
+      else
+        daysFilter = daysFilter.or(nextPart);
+    });
+    query = query.where(daysFilter);
+  }
 
   console.log(query.toString());
   
@@ -126,11 +147,9 @@ app.get('/get_files', function(req,res) {
         // Callback
         function(err,row)
         {
-          if(row.ctime === null || row.ctime === 0)
-            return;
-
+//          console.log(row.name);
           var converted = {
-            'time' : row.ctime,
+            'time' : row.crtime,
             'type' : '.jpg',
             'name' : row.name
           };
@@ -157,7 +176,7 @@ app.post("/createGame", function(req, res){
   var endDate =  req.body.end;
 
   // send array of files
-	res.send( {success : dfiles: []});
+	res.send( {success : true, dfiles: []});
 });
 
 
@@ -227,3 +246,4 @@ app.get('/exec_cmd', function(req, res) {
 */
 
 app.listen(3000);
+

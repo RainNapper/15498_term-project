@@ -7,7 +7,6 @@ var highlighted = [];
 var plot;
 
 function classifyFile(type) {
-  console.log("classifying filetype: "+type);
   if($.inArray(type,docs) !== -1)
     return 0;
   if($.inArray(type,img) !== -1)
@@ -24,17 +23,13 @@ function xAxisLabelGenerator(x)
 }
 
 function drawTimeline(dfiles) {
-  console.log("test");
   var i = 0;
   var dpoints = [];
 
   if (dfiles !== null) {
     dfiles.forEach(function(file, i){
       var jsTime = new Date(file.time*1000);
-      console.log(classifyFile(file.type));
       dpoints.push([jsTime, classifyFile(file.type)]);
-      console.log(file.time);
-      console.log(file.type);
     });
   }
 

@@ -1,4 +1,4 @@
-var debug = 1;
+var debug = 0;
 
 // time must be in Javascript Date format
 function fakeData(time, dayofweek, type) {
@@ -6,7 +6,6 @@ function fakeData(time, dayofweek, type) {
   this.dow = dayofweek;
   this.type = type;
 }
-
 
 function makeFakeData() {
   var data = [];
@@ -51,10 +50,10 @@ function load_db()
   $.get('/load_db', null)
     .done(function(res)
     {
-      if(!res.success)
-      {
+      if(res.success)
+        alert("Database created successfully!");
+      else
         alert("Something failed");
-      }
     });
 }
 
