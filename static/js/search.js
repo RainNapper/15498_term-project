@@ -16,7 +16,7 @@ function displayDateInput(){
     //$('#endDatePick').DatePickerShow();
   } else {
     console.log("><");
-    $('#endDatePick').DatePicker({
+    /*$('#endDatePick').DatePicker({
       format: 'Y/m/d',
       flat: true,
       date: '2008-07-31',
@@ -28,9 +28,11 @@ function displayDateInput(){
         $('#endDateInput').val(formated);
         $('#endDatePick').DatePickerHide();
       }
-    });
+    });*/
   }
 }  
+
+
   
 function drawForm(){
   daysOfWeek.forEach(function(day,i) {
@@ -104,3 +106,10 @@ function list_files(res)
 }
 
 
+function next(thisbox, nextbox) {
+  
+  if ( thisbox.value.length == thisbox.maxLength) {
+    if (nextbox !== '')
+      thisbox.form.elements[nextbox].focus();
+  }
+}
