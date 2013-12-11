@@ -30,9 +30,10 @@ function drawForm(){
   
 function filter() {
   var timeMode = $('#time_type').val();
-
   var days = [];
   var extensions = [];
+  var startDate =  $('#startDateInput').val();
+  var endDate =  $('#endDateInput').val();
   $('#days_of_week').find('input').each(function(){
     days.push(this.checked);
   });
@@ -41,11 +42,22 @@ function filter() {
     extensions.push(this.checked);
   });
   
-
-  var startDate =  $('#startDateInput').val();
-  var endDate =  $('#endDateInput').val();
   if(debug)
     console.log(timeMode, startDate, endDate, days, extensions);
+    
+  $.ajax({
+		type: "post",
+		url: "/filterParameters",
+		data: {"timeMode": timeMode,
+           "days": days,
+           "extensions": extensions,
+           "start": startDate,
+           "end": endDate},
+		success: function() {
+      console.log("hehehe");
+			//drawTimeline(data.dfiles);
+		}
+	});
 
 }
 

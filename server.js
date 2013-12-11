@@ -148,6 +148,17 @@ app.get('/get_files', function(req,res) {
   db.close();
 });
 
+app.post("/createGame", function(req, res){
+
+  var timeMode = req.body.timeMode;
+  var days = req.body.days;
+  var extensions = req.body.extensions;
+  var startDate =  req.body.start;
+  var endDate =  req.body.end;
+
+  // send array of files
+	res.send( {success : dfiles: []});
+});
 
 
 // Need to be entered by user at some point
