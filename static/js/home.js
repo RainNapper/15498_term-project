@@ -1,4 +1,4 @@
-var debug = 0;
+var debug = 1;
 
 // time must be in Javascript Date format
 function fakeData(time, dayofweek, type) {
@@ -91,15 +91,6 @@ function list_files(res)
 
 $(document).ready(function() {
   drawTimeline([]);
+  drawForm();
   $('#load_db').click(load_db);
-  $('.date').DatePicker({
-    format: 'Y/m/d',
-    flat: true,
-    date: '2008-07-31',
-    current: '2008-07-31',
-    calendars: 1,
-    starts: 1,
-    onChange: function(formated, dates){
-    }
-  });
 });

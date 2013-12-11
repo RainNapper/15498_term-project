@@ -39,9 +39,17 @@ body {
 }
 
 #content{
-	position: relative;
-	margin: 50px;
+	/*position: relative;*/
+	margin: 30px 50px;
 	display: block;
+  
+  -moz-border-radius: 5px;
+	box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+	-o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  
 }
 
 #file-input {
@@ -51,7 +59,7 @@ body {
 	width: 70%;
 }
 
-input, button {
+input[type="submit"], button {
 	font-size: 20px;
 	color: #fff;
 	background: #2bf;
@@ -65,47 +73,50 @@ input[type="submit"], button {
 .container {
 	position: absolute;
 	box-sizing: border-box;
-	width: 75%;
-	height: 450px;
 	padding: 20px 15px 15px 15px;
-	margin: 30px auto;
+	margin: 15px auto 30px auto;
 	border: 1px solid #ddd;
 	border-radius: 5px;
 	background: #fff;
-	-moz-border-radius: 5px;
-	box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-	-o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-	-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-	-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
 
 #tl {
-	left: 0;
-	width: 75%;
+	width: 1200px;
+	height: 450px;
+  
 }
 
 #search {
-	right: 0;
-	width: 23%;
+	left: 1270px;
+	width: 350px;
+  height: 450px;
 }
 
 .tl-placeholder {
   float: right;
 	width: 100%;
-	height: 95%;
+	height: 90%;
 	font-size: 14px;
 	line-height: 1.2em;
 }
 
 .zoom{
   float: right;
+  margin-top: 20px;
+  margin-right: 10px;
 }
 
-#filterForm {
+#formFilter {
 	position: relative;
 	float: left;
 	left: 10px;
+  /*display: none;*/
+}
+
+.dayOfWeek {
+  display:inline;
+  position:relative;
+  float: top;
 }
 
 ::-webkit-input-placeholder {font-style: italic}

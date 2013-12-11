@@ -29,42 +29,49 @@
     <div id="content" >
       <div id="tl" class="container">
       
-        <input type='submit' class='zoom' id='zoom-out' value='zoom out'>
-        <input type='submit' class='zoom' id='zoom-in' value='zoom in'> 
+        <button class='zoom' id='zoom-out'> zoom out </button>
+        <button class='zoom' id='zoom-in'> zoom in</button>
         <div id="timeline" class="tl-placeholder"></div>
+        <select id="time_type"><br>
+            <option value=0>Created</option>
+            <option value=1>Last Modified</option>
+        </select>
 
       </div>
       <div id="search" class="container">
-        <form id="filterForm" action="javascript:search()">
+        <input id="toggleFilter" type="submit" value="Filter Results" onclick="javascript:toggleForm()">
+        <form id="formFilter" action="javascript:filter()">
           <div id="days_of_week">
-            <input type="checkbox" class="day_of_week"  name="Monday" value=0>Monday<br>
-            <input type="checkbox" class="day_of_week"  name="Tuesday" value=1>Tuesday<br>
-            <input type="checkbox" class="day_of_week"  name="Wednesday" value=2>Wednesday<br>
-            <input type="checkbox" class="day_of_week"  name="Thursday" value=3>Thursday<br>
-            <input type="checkbox" class="day_of_week"  name="Friday" value=4>Friday<br>
-            <input type="checkbox" class="day_of_week"  name="Saturday" value=5>Saturday<br>
-            <input type="checkbox" class="day_of_week" name="Sunday" value=6>Sunday<br>
+            <input type="checkbox" class="dayOfWeek"  name="Monday" value=0>M<br>
+            <input type="checkbox" class="dayOfWeek"  name="Tuesday" value=1>T<br>
+            <input type="checkbox" class="dayOfWeek"  name="Wednesday" value=2>W<br>
+            <input type="checkbox" class="dayOfWeek"  name="Thursday" value=3>Th<br>
+            <input type="checkbox" class="dayOfWeek"  name="Friday" value=4>F<br>
+            <input type="checkbox" class="dayOfWeek"  name="Saturday" value=5>Sat<br>
+            <input type="checkbox" class="dayOfWeek" name="Sunday" value=6>S<br>
           </div>
-          <select id="time_type"><br>
-            <option value=0>Created</option>
-            <option value=1>Last Modified</option>
-          </select>
-          <div id="date_range">
-            <div>
-              Date Range:
+          <div id="extensions">
+            <input type="checkbox" class="ext"  name="doc" value=0>.doc<br>
+            <input type="checkbox" class="ext"  name="img" value=1>.img<br>
+            <input type="checkbox" class="ext"  name="misc" value=2>.misc<br>
+          </div>
+
+          <div id="date_range">            
+            <div class="datePick" id="startDate"> Start Date: 
+              <input id="startDateInput" type="text" name="dateInput" placeholder="mm/dd/yy">
+              <p class='date' id='startDatePick'></p>
             </div>
-            Start Date:
-            <p class='date' id='start_date'>
-            </p>
-            End Date:
-            <p class='date' id='end_date'>
-            </p>
+            
+            <div class="datePick" id="endDate"> End Date: 
+              <input id="endDateInput" type="text" name="dateInput" placeholder="mm/dd/yy"
+              onclick="javascript:displayDateInput()">
+              <p class='date' id='endDatePick'></p>
+            </div>
           </div>
 
-
-          <!--<input id="search-input" type="text" name="searchInput" placeholder="Search for a file">
-          <input type="submit" value="Submit">-->
+          <input type="submit" value="Submit">
         </form>
+        
       </div>
     </div>
 
