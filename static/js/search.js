@@ -1,10 +1,18 @@
 var daysOfWeek = [[0, 'Sunday'], [1, 'Monday'], [2, 'Tuesday'], [3, 'Wednesday'],
               [4, 'Thursday'] , [5, 'Friday'], [6, 'Saturday']];
 
-var extTypes = [[0, 'doc'], [1, 'img'], [2, 'misc']];
-
 var timeTypes = [[0, 'Created'],[1, 'Last Modified'], [2, 'Last Accessed'],
                  [3,'Metadata Status Change']];
+
+//file extensions
+var filetypes = 
+  [
+    ['misc', ['.log'],'purple'],
+    ['docs', ['.doc', '.pdf', '.txt', '.ppt', '.tex'],'red'],
+    ['imgs', ['.jpg', '.gif', '.png', '.bmp'],'green'],
+    ['vids', ['.mp4', '.mov', '.m4v'],'yellow'],
+    ['audio',['.mp3', '.wav', '.flac'],'blue']
+  ];
 
 function toggleForm(){
    $( "#formFilter" ).toggle();
@@ -40,11 +48,11 @@ function drawForm(){
     $('#days_of_week').append(checkday, day[1], br);
   });
   
-  extTypes.forEach(function(ext,i) {
+  filetypes.forEach(function(ext,i) {
     var checkext = $('<input>').addClass("extensions")
                              .attr({"type":"checkbox", "name":ext[0],"value":ext[1]});
     var br = $('<br>');
-    $('#extensions').append(checkext, ext[1], br);
+    $('#extensions').append(checkext, ext[0], br);
   });
 
   timeTypes.forEach(function(tt,i) {
@@ -57,6 +65,8 @@ function drawForm(){
 function filter() {
   var timeMode = $('#time_type').val();
   var nameFilter = $('#name_filter').val();
+  if(nameFilter === '')
+    nameFilter = {};
   var days = [];
   var extensions = [];
   var start = [];
@@ -91,12 +101,12 @@ function filter() {
   
   $('#days_of_week').find('input').each(function(){
     if(this.checked)
-    days.push(this.name);
+      days.push(this.value);
   });
 
   $('#extensions').find('input').each(function(){
     if(this.checked)
-    days.push(this.name);
+      extensions = extensions.concat(this.value.split(','));
   });
 
 
@@ -123,7 +133,6 @@ function list_files(res)
   {
     $('#output').val(JSON.stringify(res));
     files = res.file_list;
-    console.log(files);
   }
   else
     alert("Something failed!");

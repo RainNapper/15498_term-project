@@ -1,12 +1,3 @@
-//file extensions
-var filetypes = 
-  [
-    ['misc', ['.log'],'purple'],
-    ['docs', ['.doc', '.pdf', '.txt', '.ppt', '.tex'],'red'],
-    ['imgs', ['.jpg', '.gif', '.png', '.bmp'],'green'],
-    ['vids', ['.mp4', '.mov', '.m4v'],'yellow'],
-    ['audio',['.mp3', '.wav', '.flac'],'blue']
-  ]
 
 var highlighted = [];
 var plot;
@@ -31,6 +22,26 @@ function buildTicks()
     ticks.push([i,extList[0]]);
   });
   return ticks;
+}
+
+function displayHighlighted() {
+  var table = $('#file_info');
+  table.html('');
+  var titleRow = $('<tr></tr>');
+  titleRow.append($('<td></td>').html('File Name'));
+  titleRow.append($('<td></td>').html('Extension'));
+  titleRow.append($('<td></td>').html('Date'));
+  table.append(titleRow);
+  
+  highlighted.forEach(function(fileIdx,i)
+  {
+    var fileObj = allFileInfo[fileIdx];
+    var row = $('<tr></tr>');
+    row.append($('<td></td>').html(fileObj.name));
+    row.append($('<td></td>').html(fileObj.type));
+    row.append($('<td></td>').html(new Date(fileObj.time * 1000).toString('yyyy-MM-dd')));
+    table.append(row);
+  });
 }
 
 function drawTimeline(dfiles) {
