@@ -65,6 +65,7 @@ function get_all_files()
 
 function list_files(res)
 {
+  unselect_all_files();
   if(res.success)
   {
     $('#output').val(JSON.stringify(res));
