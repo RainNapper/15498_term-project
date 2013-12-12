@@ -19,22 +19,25 @@
       <input type='button' class='home' id='select_img' value='Select Image'>
       <input type="submit" class="home" id="timeline" value="Go To Timeline">
     </form>
+    
+    <br></br>
+    <div label='input'>
+      TSK Tool Path: <input type='text' id='toolPath'><br>
+      Image File Path: <input type='text' id='imagePath'><br>
+      Command: <input type='text' id='command'><br>
+      <!--<select id='cmd'>
+        <option value="mount">mount</option>
+        <option value="fstools/fsstat">fsstat</option>
+        <option value="fstools/blkstat">blkstat</option>
+      </select>
+      <input type='text' id='target'><br>-->
+      <input type='submit' id='submit' value='Send Command'>
+      <input type='button' id='clear' value='Clear'>
+    </div>
+
   </div>
 
-  <div label='input'>
-    TSK Tool Path: <input type='text' id='toolPath'><br>
-    Image File Path: <input type='text' id='imagePath'><br>
-    Command: <input type='text' id='command'><br>
-    <!--<select id='cmd'>
-      <option value="mount">mount</option>
-      <option value="fstools/fsstat">fsstat</option>
-      <option value="fstools/blkstat">blkstat</option>
-    </select>
-    <input type='text' id='target'><br>-->
-    <input type='submit' id='submit' value='Send Command'>
-    <input type='button' id='clear' value='Clear'>
-  </div>
-
+  
 
   <script src="js/jquery-1.9.0.js"></script>
   <script src="js/scripts.js"></script>
