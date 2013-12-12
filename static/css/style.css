@@ -94,6 +94,7 @@ input[type="submit"], input[type="button"], button {
 #results{
   top: 700px;
   width: 1000px;
+  height: 200px;
   max-height: 350px;
   overflow-y: scroll;
 }
@@ -145,7 +146,7 @@ th, td, tr {
    font-size: 15px;
    padding: 5px;
    text-align: left;
-   width: 100px;
+   width: 120px;
 }
 
 th {
