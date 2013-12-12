@@ -120,8 +120,9 @@ input[type="submit"], button {
   max-width: 30px;
 }
 
-#datelabel {
-   float: bottom;
+.tl-Time {
+   padding: 5px;
+   display: inline;
 }
 
 ::-webkit-input-placeholder {font-style: italic}
