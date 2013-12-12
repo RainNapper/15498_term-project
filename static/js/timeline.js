@@ -1,25 +1,40 @@
 //file extensions
-var docs = ['.doc', '.pdf', '.txt', '.ppt'];
-var img = ['.jpg', '.png'];
-var misc = ['.log'];
+var filetypes = 
+  [
+    ['misc', ['.log'],'purple'],
+    ['docs', ['.doc', '.pdf', '.txt', '.ppt', '.tex'],'red'],
+    ['imgs', ['.jpg', '.gif', '.png', '.bmp'],'green'],
+    ['vids', ['.mp4', '.mov', '.m4v'],'yellow'],
+    ['audio',['.mp3', '.wav', '.flac'],'blue']
+  ]
 
 var highlighted = [];
 var plot;
 
 function classifyFile(type) {
-  if($.inArray(type,docs) !== -1)
-    return 0;
-  if($.inArray(type,img) !== -1)
-    return 1;
-  if($.inArray(type,misc) !== -1)
-    return 2;
-  return -1;
+  var match = 0;
+  filetypes.forEach(function(extList,i)
+  {
+    if($.inArray(type,extList[1]) !== -1)
+      match = i;
+  });
+  return match;
 }
 
 
 function xAxisLabelGenerator(x)
 {
   return xAxisLabels[x];
+}
+
+function buildTicks()
+{
+  var ticks = []
+  filetypes.forEach(function(extList,i)
+  {
+    ticks.push([i,extList[0]]);
+  });
+  return ticks;
 }
 
 function drawTimeline(dfiles) {
@@ -44,7 +59,7 @@ function drawTimeline(dfiles) {
       //ticks: daysOfWeek
     },
     yaxis: {
-      ticks: [[-1,""], [0, ".doc"], [1, ".img"], [2, ".misc"], [3,""]] ,
+      ticks: buildTicks(),
       zoomRange: false
     },
     lines: { 
@@ -154,28 +169,18 @@ function raw(plot, ctx) {
   for (var i = 0; i < data.length; i++) {
     var series = data[i];
     for (var j = 0; j < series.data.length; j++) {
-      var color = "";
-      if (series.data[j][1] == 0) //docs
-        color = "red";
-      else if (series.data[j][1] == 1) //img
-        color = "yellow";
-      else if (series.data[j][1] == 2) //misc
-        color = "green";
-        
+
+      var color = filetypes[series.data[j][1]][2]
       var d = (series.data[j]);
+      var x = offset.left + axes.xaxis.p2c(d[0]);
+      var y = offset.top + axes.yaxis.p2c(d[1]);
+      var r = 20;
+       var d = (series.data[j]);
       var x = offset.left + axes.xaxis.p2c(d[0]);
       var y = offset.top + axes.yaxis.p2c(d[1]);
       var r = 20; 
       ctx.fillStyle = color;
-      ctx.fillRect(x-r,y-r,2*r,2*r);      
-      
-      /*ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(x,y,r,0,Math.PI*2,true);
-      ctx.closePath();            
-      ctx.fillStyle = color;
-      ctx.fill();
-      */
+      ctx.fillRect(x-r,y-r,2*r,2*r);
     }    
   }
 }
