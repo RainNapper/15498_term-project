@@ -127,13 +127,15 @@ function drawTimeline(dfiles) {
   timeline.bind("plotclick", function (event, pos, item) {  
     if (item) {
       if (highlighted.indexOf(item.dataIndex) > -1) {
-        console.log("highlited");
+        console.log("highlited",item, plot.getData());
         plot.unhighlight(item.series, item.datapoint);
         highlighted.splice(highlighted.indexOf(item.datapoint), 1);
       } else if (highlighted.indexOf(item.dataIndex) < 0){
-        console.log("lalal");
-        plot.highlight(item.series, item.datapoint);
-        highlighted.push(item.dataIndex);
+         //plot.getData()[item.dataIndex
+         console.log("lalal", item, item.series.data[item.dataIndex]);
+         plot.highlight(item.series, item.datapoint);  
+         item.series.data[item.dataIndex].color = "blue";
+         highlighted.push(item.dataIndex);
       }
       displayHighlighted();
     }
@@ -142,6 +144,7 @@ function drawTimeline(dfiles) {
   
   timeline.bind("plothover", function(event, pos, item){
      event.preventDefault();
+     //plot.getData()[0].highlightColor = "rgba(0, 255, 0, 0.1)";
   });
   
   timeline.bind("plotzoom", function (event, pos, item) { 
@@ -174,8 +177,6 @@ function adjustAxes(plot) {
   var x = plot.getOptions();
   var minDate = new Date(axes.xaxis.min);
   var maxDate = new Date(axes.xaxis.max);
-  
-  console.log(minDate, maxDate);
   
   //same year
   if (minDate.getFullYear() === maxDate.getFullYear()) {

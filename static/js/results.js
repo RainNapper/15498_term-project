@@ -10,7 +10,7 @@ function displayHighlighted() {
   highlighted.forEach(function(fileIdx,i)
   {
     var fileObj = allFileInfo[fileIdx];
-    console.log(fileObj);
+    //console.log(fileObj);
     var row = $('<tr></tr>');
     row.append($('<td></td>').html(new Date(fileObj.time * 1000).toString('yyyy-MM-dd')));
     row.append($('<td></td>').html(fileObj.name));
