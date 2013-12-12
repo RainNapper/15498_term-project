@@ -69,13 +69,18 @@ input[type="submit"], input[type="button"], button {
 }
 
 .container {
-	position: absolute;
+  float: left;
 	box-sizing: border-box;
 	padding: 20px 15px 15px 15px;
 	margin: 15px auto 15px auto;
 	border: 1px solid #ddd;
 	border-radius: 5px;
 	background: #fff;
+}
+
+#file_info {
+  width: 350px;
+  height: 450px;
 }
 
 #tl {

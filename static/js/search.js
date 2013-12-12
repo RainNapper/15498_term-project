@@ -56,6 +56,7 @@ function drawForm(){
   
 function filter() {
   var timeMode = $('#time_type').val();
+  var nameFilter = $('#name_filter').val();
   var days = [];
   var extensions = [];
   var start = [];
@@ -84,6 +85,8 @@ function filter() {
   var endDate = new Date(end[1], end[0], end[2]);
 
   var startTime = Date.parse($('#startTimeInput').val());
+  if(startTime === null)
+    startTime = {};
   var endTime = Date.parse($('#endTimeInput').val());
   
   $('#days_of_week').find('input').each(function(){
@@ -97,7 +100,9 @@ function filter() {
   });
 
 
-  var filter = {"timeMode": timeMode,
+  var filter = {
+    "nameFilter": nameFilter,
+    "timeMode": timeMode,
     "days": days,
     "extensions": extensions,
     "startTime": startTime,
@@ -118,6 +123,7 @@ function list_files(res)
   {
     $('#output').val(JSON.stringify(res));
     files = res.file_list;
+    console.log(files);
   }
   else
     alert("Something failed!");

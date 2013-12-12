@@ -36,6 +36,7 @@ function buildTicks()
 function drawTimeline(dfiles) {
   var i = 0;
   var dpoints = [];
+  allFileInfo = [];
   var minTime, maxTime;
 
   if (dfiles !== null) {
