@@ -31,10 +31,12 @@ function xAxisLabelGenerator(x)
 function buildTicks()
 {
   var ticks = []
+  ticks[0] = [-1, ''];
   filetypes.forEach(function(extList,i)
   {
     ticks.push([i,extList[0]]);
   });
+  ticks.push([filetypes.length, '']);
   return ticks;
 }
 
@@ -80,12 +82,13 @@ function drawTimeline(dfiles) {
   var options = {
     xaxis: { 
       mode: "time",
-      timeformat: "%m/%d/%Y"
+      timeformat: "%y/%m/%d",
       //ticks: daysOfWeek
     },
     yaxis: {
       ticks: buildTicks(),
-      zoomRange: false
+      zoomRange: false,
+      panRange: false,
     },
     lines: { 
       show: false
@@ -102,7 +105,6 @@ function drawTimeline(dfiles) {
     zoom: {
       interactive: true,
       amount: 1.5,
-      zoomRange: [1, 100],
     },
     pan: {
       interactive: true
@@ -137,54 +139,45 @@ function drawTimeline(dfiles) {
     else console.log("click");
   });
   
+  timeline.bind("plothover", function(event, pos, item){
+     event.preventDefault();
+  });
+  
   timeline.bind("plotzoom", function (event, pos, item) { 
-    
-    console.log("zoom");
+    event.preventDefault();
+    var axes = plot.getAxes();
+    var x = plot.getOptions();
+    var minDate = new Date(axes.xaxis.min);
+    var maxDate = new Date(axes.xaxis.max);
+    console.log(axes, minDate, maxDate);
+     
+  });
+  
+  timeline.bind("plotpan", function (event, plot) {
+    var axes = plot.getAxes();
+    var x = plot.getOptions();
+    var minDate = new Date(axes.xaxis.min);
+    var maxDate = new Date(axes.xaxis.max);
+    console.log(axes, minDate, maxDate);
   });
 
   // add zoom buttons
   $("#zoom-in")
   .click(function (event) {
-    timeline.unbind("plotclick");
     event.preventDefault();
-    var x = plot.getOptions();
-    console.log(x);
     plot.zoom();
   });
 
   $("#zoom-out")
   .click(function (event) {
-    timeline.unbind("plotclick");
     event.preventDefault();
     plot.zoomOut();
   });
   
   var date = $("<p>").attr('id', 'datelabel').html("Date");
   timeline.append(date);
-  
-  /*$(timeline).bind("plothover", function (event, pos, item) {
-    if (item) {
-      var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
-      $("#hoverdata").text(str);
-    }
-  });
-    timeline.bind("plotpan", function (event, plot) {
-    var axes = plot.getAxes();
-    $(".message").html("Panning to x: "  + axes.xaxis.min.toFixed(2)
-    + " &ndash; " + axes.xaxis.max.toFixed(2)
-    + " and y: " + axes.yaxis.min.toFixed(2)
-    + " &ndash; " + axes.yaxis.max.toFixed(2));
-  });
+ 
 
-
-  timeline.bind("plotzoom", function (event, plot) {
-    var axes = plot.getAxes();
-    $(".message").html("Zooming to x: "  + axes.xaxis.min.toFixed(2)
-    + " &ndash; " + axes.xaxis.max.toFixed(2)
-    + " and y: " + axes.yaxis.min.toFixed(2)
-    + " &ndash; " + axes.yaxis.max.toFixed(2));
-  });
-  */
   
 }
 
