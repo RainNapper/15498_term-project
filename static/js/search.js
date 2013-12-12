@@ -91,12 +91,13 @@ function filter() {
   
   $('#days_of_week').find('input').each(function(){
     if(this.checked)
-    days.push(this.name);
+      days.push(this.name);
   });
 
   $('#extensions').find('input').each(function(){
+    console.log(this);
     if(this.checked)
-    days.push(this.name);
+      days.push(this.value);
   });
 
 
@@ -123,7 +124,6 @@ function list_files(res)
   {
     $('#output').val(JSON.stringify(res));
     files = res.file_list;
-    console.log(files);
   }
   else
     alert("Something failed!");

@@ -50,7 +50,6 @@ function displayHighlighted() {
   highlighted.forEach(function(fileIdx,i)
   {
     var fileObj = allFileInfo[fileIdx];
-    console.log(fileObj);
     var row = $('<tr></tr>');
     row.append($('<td></td>').html(fileObj.name));
     row.append($('<td></td>').html(fileObj.type));

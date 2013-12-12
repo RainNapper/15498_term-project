@@ -115,6 +115,8 @@ function build_query(req)
   var strftime = sql.functionCallCreator('STRFTIME');
   var datetime = sql.functionCallCreator('DATETIME');
 
+
+  // Name filter
   if(typeof req.nameFilter === 'undefined')
     console.log("no name filter");
   else
@@ -123,8 +125,24 @@ function build_query(req)
     query = query.where(nameFilter);
   }
 
+  // Extension filter
+  if(typeof req.extensions === 'undefined')
+    console.log("no extension filter");
+  else
+  {
+    var extFilter = null;
+    (req.extensions).forEach(function(ext,i)
+    {
+      var nextPart = file_db.name.like('%.'+ext);
+      if(extFilter === null)
+        extFilter = nextPart;
+      else
+        extFilter = extFilter.or(nextPart);
+    });
+    query = query.where(extFilter);
+  }
+
   // Start and End time range
-  console.log('startTime: '+(typeof req.startTime));
   if(typeof req.startTime === 'undefined' || typeof req.endTime === 'undefined')
     console.log("no time range");
   else
