@@ -1,4 +1,4 @@
-var debug = 0;
+var debug = 1;
 
 // time must be in Javascript Date format
 function fakeData(time, dayofweek, type) {
@@ -12,7 +12,7 @@ function makeFakeData() {
   var types = ['.jpg', '.doc', '.log'];
   var i = 0;
   while (i < 5) {
-    var time = new Date(2013,Math.floor(Math.random()*12),Math.floor(Math.random()*30));
+    var time = new Date(2013, Math.floor(Math.random()*12),Math.floor(Math.random()*30));
     var type = Math.floor(Math.random()*types.length);
     data[i] =  new fakeData(time, types[type], types[type]);
     i++;

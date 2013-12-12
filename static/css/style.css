@@ -120,6 +120,10 @@ input[type="submit"], button {
   max-width: 30px;
 }
 
+#datelabel {
+   float: bottom;
+}
+
 ::-webkit-input-placeholder {font-style: italic}
 :-moz-placeholder {font-style: italic}
 :-ms-input-placeholder {font-style: italic}

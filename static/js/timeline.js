@@ -28,14 +28,19 @@ function drawTimeline(dfiles) {
 
   if (dfiles !== null) {
     dfiles.forEach(function(file, i){
-      var jsTime = new Date(file.time*1000);
-      dpoints.push([jsTime, classifyFile(file.type)]);
+      if (!debug) {
+        var jsTime = new Date(file.time*1000);
+        dpoints.push([jsTime, classifyFile(file.type)]);
+      }
+      else 
+        dpoints.push([file.time, classifyFile(file.type)]);
     });
   }
 
   var options = {
     xaxis: { 
       mode: "time",
+      timeformat: "%m/%d/%Y"
       //ticks: daysOfWeek
     },
     yaxis: {
@@ -47,7 +52,8 @@ function drawTimeline(dfiles) {
     },
     points: {
       show: true,
-      radius: 20
+      radius: 20,
+      symbol: "square"
     },
     grid: {
       hoverable: true,
@@ -55,7 +61,8 @@ function drawTimeline(dfiles) {
     },
     zoom: {
       interactive: true,
-      amount: 1.5
+      amount: 1.5,
+      zoomRange: [1, 100],
     },
     pan: {
       interactive: true
@@ -63,13 +70,13 @@ function drawTimeline(dfiles) {
     hooks: { 
       draw: [raw] 
     }
-    
   };
 
   var timeline = $("#timeline");
    
   // without unbinding, will fire plotclick events multiple times
   timeline.unbind("plotclick");
+  
 
   plot = $.plot(timeline, [dpoints], options);
 
@@ -87,20 +94,32 @@ function drawTimeline(dfiles) {
     }
     else console.log("click");
   });
+  
+  timeline.bind("plotzoom", function (event, pos, item) { 
+    
+    console.log("zoom");
+  });
 
   // add zoom buttons
   $("#zoom-in")
   .click(function (event) {
-  timeline.unbind("plotclick");
-  event.preventDefault();
-  plot.zoom();
+    timeline.unbind("plotclick");
+    event.preventDefault();
+    var x = plot.getOptions();
+    console.log(x);
+    plot.zoom();
   });
 
   $("#zoom-out")
   .click(function (event) {
-  event.preventDefault();
-  plot.zoomOut();
+    timeline.unbind("plotclick");
+    event.preventDefault();
+    plot.zoomOut();
   });
+  
+  var date = $("<p>").attr('id', 'datelabel').html("Date");
+  timeline.append(date);
+  
   /*$(timeline).bind("plothover", function (event, pos, item) {
     if (item) {
       var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
@@ -142,16 +161,21 @@ function raw(plot, ctx) {
         color = "yellow";
       else if (series.data[j][1] == 2) //misc
         color = "green";
-        var d = (series.data[j]);
-        var x = offset.left + axes.xaxis.p2c(d[0]);
-        var y = offset.top + axes.yaxis.p2c(d[1]);
-        var r = 20;                
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.arc(x,y,r,0,Math.PI*2,true);
-        ctx.closePath();            
-        ctx.fillStyle = color;
-        ctx.fill();
+        
+      var d = (series.data[j]);
+      var x = offset.left + axes.xaxis.p2c(d[0]);
+      var y = offset.top + axes.yaxis.p2c(d[1]);
+      var r = 20; 
+      ctx.fillStyle = color;
+      ctx.fillRect(x-r,y-r,2*r,2*r);      
+      
+      /*ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(x,y,r,0,Math.PI*2,true);
+      ctx.closePath();            
+      ctx.fillStyle = color;
+      ctx.fill();
+      */
     }    
   }
 }
