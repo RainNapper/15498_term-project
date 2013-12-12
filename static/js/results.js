@@ -12,7 +12,7 @@ function displayHighlighted() {
     var fileObj = allFileInfo[fileIdx];
     console.log(fileObj);
     var row = $('<tr></tr>');
-    row.append($('<td></td>').html(new Date(fileObj.time * 1000).toString('yyyy-MM-dd')));
+    row.append($('<td></td>').html(getUTCDate(fileObj.time).toString('yyyy-MM-dd')));
     row.append($('<td></td>').html(fileObj.name));
     row.append($('<td></td>').html(fileObj.type));
 

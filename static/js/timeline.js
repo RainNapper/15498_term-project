@@ -4,6 +4,13 @@ var plot;
 
 var allFileInfo = [];
 
+function getUTCDate(epoch)
+{
+  var d = new Date(epoch * 1000);
+  d = new Date(d.getTime() + d.getTimezoneOffset()*60000);
+  return d;
+}
+
 function classifyFile(type) {
   var match = 0;
   filetypes.forEach(function(extList,i)
@@ -39,7 +46,7 @@ function displayHighlighted() {
     var row = $('<tr></tr>');
     row.append($('<td></td>').html(fileObj.name));
     row.append($('<td></td>').html(fileObj.type));
-    row.append($('<td></td>').html(new Date(fileObj.time * 1000).toString('yyyy-MM-dd')));
+    row.append($('<td></td>').html(getUTCDate(fileObj.time).toString('yyyy-MM-dd')));
     table.append(row);
   });
 }
@@ -54,7 +61,7 @@ function drawTimeline(dfiles) {
     dfiles.forEach(function(file, i){
       allFileInfo.push(file);
       if (!debug) {
-        var jsTime = new Date(1000*file.time);
+        var jsTime = getUTCDate(file.time);
         dpoints.push([jsTime, classifyFile(file.type)]);
         if (minTime == null && maxTime == null) {
           minTime = jsTime;

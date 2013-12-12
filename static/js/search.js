@@ -43,7 +43,7 @@ function displayDateInput(){
 function drawForm(){
   daysOfWeek.forEach(function(day,i) {
     var checkday = $('<input>').addClass("daysOfWeek")
-                             .attr({"type":"checkbox", "name":day[0],"value":day[1]});
+                             .attr({"type":"checkbox", "name":day[1],"value":day[0]});
     var br = $('<br>');
     $('#days_of_week').append(checkday, day[1], br);
   });
