@@ -2744,7 +2744,7 @@ Licensed under the MIT license.
 
         // returns the data item the mouse is over, or null if none is found
         function findNearbyItem(mouseX, mouseY, seriesFilter) {
-            var maxDistance = options.grid.mouseActiveRadius,
+            var maxDistance = options.grid.mouseActiveRadius+11,
                 smallestDistance = maxDistance * maxDistance + 1,
                 item = null, foundPoint = false, i, j, ps;
 
@@ -2980,7 +2980,7 @@ Licensed under the MIT license.
             var pointRadius = series.points.radius + series.points.lineWidth / 2;
             octx.lineWidth = pointRadius;
             octx.strokeStyle = highlightColor;
-            var radius = 1.5 * pointRadius;
+            var radius = 1 * pointRadius;
             x = axisx.p2c(x);
             y = axisy.p2c(y);
 
