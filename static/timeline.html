@@ -15,6 +15,7 @@
     <script src='js/home.js'></script>
     <script src='js/timeline.js'></script>
     <script src='js/search.js'></script>
+    <script src='js/results.js'></script>
   </head>
 
   <body>  
@@ -22,10 +23,12 @@
       <h1>Welcome to our 15-498 project</h1>
     </div>
 
-    <input type='submit' id='load_db' value='Create DB File'>
-    <input type='submit' id='list_files' value='Show All Files' onclick='javascript:get_all_files()'>
     
     <div id='content' >
+    
+    <input type='submit' id='load_db' value='Create DB File'>
+    <input type='submit' id='list_files' value='Show All Files' onclick='javascript:get_all_files()'>
+    <input type='submit' id='unselect_files' value='Unselect All Files' onclick='javascript:unselect_all_files()'>
       <div id='tl' class='container'>
         <div id='tl-comTime'>
           <div id='tl-Year' class='tl-Time'> </div>
@@ -55,7 +58,7 @@
             <select id='time_type'><br></select>
             <div id='startDate' class='datePick'> Start Date: 
               <input type='text' class='dateInput' name='startMonth' placeholder='mm' onkeyup="next(this, 'startDay');" size='2' maxlength='2'>/
-              <input type='text class='dateInput' name='startDay' placeholder='dd' onkeyup="next(this, 'startYear');" size='2' maxlength='2'>/
+              <input type='text' class='dateInput' name='startDay' placeholder='dd' onkeyup="next(this, 'startYear');" size='2' maxlength='2'>/
               <input type='text' class='dateInput' name='startYear' placeholder='yy' onkeyup="next(this, '');" size='4' maxlength='4'>
            </div>
             
@@ -66,14 +69,12 @@
              
             </div>
           </div>
-
+          <input type='submit' value='Submit'>
         </form>
       </div>
+      <div id='results' class='container'>
+      </div>
     </div>
-    <br>
-    <br>
-        <div id='file_info' class='container'>
-        </div>
 
   </body>
 </html>

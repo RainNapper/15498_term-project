@@ -1,13 +1,14 @@
 /* Your CSS goes here */
 /* Reset */
 
-html, body, div, h1, h2, h3, em, ul, li, section {
+html, content, body, div, h1, h2, h3, em, ul, li, section {
 	margin: 0;
 	padding: 0;
 	border: 0;
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+  max-width: 1400px;
 }
 
 html {
@@ -44,12 +45,7 @@ body {
 	display: block;
   
   -moz-border-radius: 5px;
-	box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-	-o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-	-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-	-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-  
+
 }
 
 #file-input {
@@ -59,34 +55,44 @@ body {
 	width: 70%;
 }
 
-input[type="submit"], button {
-	font-size: 20px;
+
+input[type="submit"], input[type="button"], button {
+	font-size: 18px;
 	color: #fff;
 	background: #2bf;
 	font-style: normal;
   cursor: pointer;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .container {
 	position: absolute;
 	box-sizing: border-box;
 	padding: 20px 15px 15px 15px;
-	margin: 15px auto 30px auto;
+	margin: 15px auto 15px auto;
 	border: 1px solid #ddd;
 	border-radius: 5px;
 	background: #fff;
 }
 
 #tl {
-	width: 1200px;
+	width: 1000px;
 	height: 450px;
-  
 }
 
 #search {
-	left: 1270px;
-	width: 350px;
-  height: 450px;
+	left: 1070px;
+  margin-right: 50px;
+	width: 275px;
+}
+
+#results{
+  top: 700px;
+  width: 1000px;
+  height: 200px;
 }
 
 .tl-placeholder {
@@ -96,6 +102,11 @@ input[type="submit"], button {
 	font-size: 14px;
 	line-height: 1.2em;
 }
+
+::-webkit-input-placeholder {font-style: italic}
+:-moz-placeholder {font-style: italic}
+:-ms-input-placeholder {font-style: italic}
+
 
 .zoom{
   float: right;
@@ -121,12 +132,8 @@ input[type="submit"], button {
 }
 
 .tl-Time {
-   padding: 5px;
-   display: inline;
+  font-size: 20px;
+  float: left;
+  padding: 5px;
+  display: inline;
 }
-
-::-webkit-input-placeholder {font-style: italic}
-:-moz-placeholder {font-style: italic}
-:-ms-input-placeholder {font-style: italic}
-
-
