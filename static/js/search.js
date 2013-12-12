@@ -80,17 +80,6 @@ function filter() {
     end.push($(this).val());
   });
   
-  if (!debug && start[0].length !== 2 && start[1].length !== 2 && start[2].length!== 4 )
-  {
-    alert("Invalid start date");  
-    return;
-  }
-  else if (!debug && end[0].length !== 2 && end[1].length !== 2 && end[2].length!== 4)
-  {
-    alert("Invalid end date");  
-    return;
-  }
-
   var startDate = new Date(start[1], start[0], start[2]);
   var endDate = new Date(end[1], end[0], end[2]);
 

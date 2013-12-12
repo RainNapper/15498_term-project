@@ -79,11 +79,6 @@ input[type="submit"], input[type="button"], button {
 	background: #fff;
 }
 
-#file_info {
-  width: 350px;
-  height: 450px;
-}
-
 #tl {
 	width: 1000px;
 	height: 450px;
@@ -98,8 +93,8 @@ input[type="submit"], input[type="button"], button {
 #results{
   top: 700px;
   width: 1000px;
-  height: 200px;
-    overflow: scroll;
+  max-height: 350px;
+  overflow-y: scroll;
 }
 
 .tl-placeholder {
