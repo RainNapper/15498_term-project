@@ -23,11 +23,6 @@ function classifyFile(type) {
   return match;
 }
 
-function xAxisLabelGenerator(x)
-{
-  return xAxisLabels[x];
-}
-
 function buildTicks()
 {
   var ticks = []
@@ -96,7 +91,7 @@ function drawTimeline(dfiles) {
     xaxis: { 
       mode: "time",
       timeformat: "%Y/%m/%d",
-      zoomRange: [1000, maxTime-minTime],
+      zoomRange: [1000, maxTime-minTime], //1000ms => can't zoom beyond 1 sec
       panRange: [minTime, maxTime],
     },
     yaxis: {

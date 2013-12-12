@@ -83,5 +83,6 @@ function list_files(res)
 $(document).ready(function() {
   drawTimeline([]);
   drawForm();
+  displayHighlighted();
   $('#load_db').click(load_db);
 });
