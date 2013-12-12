@@ -175,16 +175,22 @@ app.get('/get_files', function(req,res) {
       // Callback
       function(err,row)
       {
+        console.log(row.crtime);
+        if(row.crtime === 0 || row.crtime === null)
+          return;
         var matches = row.name.match(/.*(\.[^\.]+)/);
         if(matches === null)
           var ext = null;
         else
           var ext = matches[1];
-        console.log(ext);
         var converted = {
           'time' : row.crtime,
+          'aTime' : row.atime,
+          'cTime' : row.ctime,
+          'mTime' : row.mTime,
           'type' : ext,
-          'name' : row.name
+          'name' : row.name,
+          'size' : row.size,
         };
         files.push(converted);
       },
