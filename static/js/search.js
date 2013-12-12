@@ -110,6 +110,8 @@ function filter() {
   if(debug || true)
     console.log('Filter Request:',filter);
 
+  unselect_all_files();
+
   $.get('/get_files',filter)
     .done(list_files);
 
