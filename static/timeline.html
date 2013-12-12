@@ -37,14 +37,19 @@
       <div id="search" class="container">
         <input id="toggleFilter" type="submit" value="Filter Results" onclick="javascript:toggleForm()">
         <form id="formFilter" action="javascript:filter()">
+          Filename Search:
+          <input id="name_filter" type="text">
           <div id="days_of_week">
           </div>
           <div id="extensions">
           </div> 
 
           <div id="time_range">
-            <input id="startTimeInput" type="text" placeholder="hh:mm:ss">
-            <input id="endTimeInput" type="text" placeholder="hh:mm:ss">
+            Start Time:
+            <input id="startTimeInput" type="text" size="8" placeholder="hh:mm:ss">
+            <br>
+            End Time:
+            <input id="endTimeInput" type="text" size="8" placeholder="hh:mm:ss">
           </div>
 
           <div id="date_range">            

@@ -115,7 +115,16 @@ function build_query(req)
   var strftime = sql.functionCallCreator('STRFTIME');
   var datetime = sql.functionCallCreator('DATETIME');
 
+  if(typeof req.nameFilter === 'undefined')
+    console.log("no name filter");
+  else
+  {
+    var nameFilter = file_db.name.like('%'+req.nameFilter+'%');
+    query = query.where(nameFilter);
+  }
+
   // Start and End time range
+  console.log('startTime: '+(typeof req.startTime));
   if(typeof req.startTime === 'undefined' || typeof req.endTime === 'undefined')
     console.log("no time range");
   else
@@ -142,7 +151,6 @@ function build_query(req)
     var daysFilter = null;
     console.log(typeof req.days);
     (req.days).forEach(function(day,i){
-      console.log(day);
       var nextPart = dayOfWeek.equals(day);
 
       if(daysFilter === null)
@@ -175,7 +183,7 @@ app.get('/get_files', function(req,res) {
       // Callback
       function(err,row)
       {
-        console.log(row.crtime);
+        console.log(row.name);
         if(row.crtime === 0 || row.crtime === null)
           return;
         var matches = row.name.match(/.*(\.[^\.]+)/);

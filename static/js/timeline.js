@@ -64,6 +64,7 @@ function displayHighlighted() {
 function drawTimeline(dfiles) {
   var i = 0;
   var dpoints = [];
+  allFileInfo = [];
 
   if (dfiles !== null) {
     dfiles.forEach(function(file, i){
