@@ -2,36 +2,40 @@
 <html>
   <head>
     <title>Deanna, Dongho, James, Mansfield</title>
-    <link href="css/reset.css" rel="stylesheet" type="text/css">
-    <link href="css/style.css" rel="stylesheet" type="text/css">
-    <script src="js/jquery-1.9.0.js" type="text/javascript"></script>
-    <script src="js/flot/jquery.flot.js" type="text/javascript"></script>
-    <script src="js/flot/jquery.flot.time.js" type="text/javascript"></script>
-    <script src="js/flot/jquery.flot.symbol.js" type="text/javascript"></script>
-    <script src="js/flot/jquery.flot.navigate.js" type="text/javascript"></script>
-    <script src="js/flot/jquery.flot.resize.js" type="text/javascript"></script>
-    <script src="js/date.js" type="text/javascript"></script>
+    <link href='css/reset.css' rel='stylesheet' type='text/css'>
+    <link href='css/style.css' rel='stylesheet' type='text/css'>
+    <script src='js/jquery-1.9.0.js' type='text/javascript'></script>
+    <script src='js/flot/jquery.flot.js' type='text/javascript'></script>
+    <script src='js/flot/jquery.flot.time.js' type='text/javascript'></script>
+    <script src='js/flot/jquery.flot.symbol.js' type='text/javascript'></script>
+    <script src='js/flot/jquery.flot.navigate.js' type='text/javascript'></script>
+    <script src='js/flot/jquery.flot.resize.js' type='text/javascript'></script>
+    <script src='js/date.js' type='text/javascript'></script>
     
-    <script src="js/home.js"></script>
-    <script src="js/timeline.js"></script>
-    <script src="js/search.js"></script>
+    <script src='js/home.js'></script>
+    <script src='js/timeline.js'></script>
+    <script src='js/search.js'></script>
   </head>
 
   <body>  
-    <div id="header">
+    <div id='header'>
       <h1>Welcome to our 15-498 project</h1>
     </div>
 
     <input type='submit' id='load_db' value='Create DB File'>
-    <input type='submit' id='list_files' value='Show All Files' onclick="javascript:get_all_files()">
+    <input type='submit' id='list_files' value='Show All Files' onclick='javascript:get_all_files()'>
     
-    <div id="content" >
-      <div id="tl" class="container">
+    <div id='content' >
+      <div id='tl' class='container'>
+        <div id='tl-comTime'>
+          <div id='tl-Year' class='tl-Time'> </div>
+          <div id='tl-Month' class='tl-Time'> </div>
+          <div id='tl-Date' class='tl-Time'> </div>
+        </div>
         <button class='zoom' id='zoom-out'> zoom out </button>
         <button class='zoom' id='zoom-in'> zoom in</button>
-        <div id="timeline" class="tl-placeholder"></div>
-        <select id="time_type"><br>
-        </select>
+        <div id='timeline' class='tl-placeholder'></div>
+
 
       </div>
       <div id="search" class="container">
@@ -41,7 +45,7 @@
           <input id="name_filter" type="text">
           <div id="days_of_week">
           </div>
-          <div id="extensions">
+          <div id='extensions'>
           </div> 
 
           <div id="time_range">
@@ -52,25 +56,22 @@
             <input id="endTimeInput" type="text" size="8" placeholder="hh:mm:ss">
           </div>
 
-          <div id="date_range">            
-            <div id="startDate" class="datePick"> Start Date: 
-              <input type="text" class="dateInput" name="startMonth" placeholder="mm" onkeyup="next(this, 'startDay');" size="2" maxlength="2">/
-              <input type="text" class="dateInput" name="startDay" placeholder="dd" onkeyup="next(this, 'startYear');" size="2" maxlength="2">/
-              <input type="text" class="dateInput" name="startYear" placeholder="yy" onkeyup="next(this, '');" size="4" maxlength="4">
+          <div id='date_range'>            
+            <select id='time_type'><br></select>
+            <div id='startDate' class='datePick'> Start Date: 
+              <input type='text' class='dateInput' name='startMonth' placeholder='mm' onkeyup="next(this, 'startDay');" size='2' maxlength='2'>/
+              <input type='text class='dateInput' name='startDay' placeholder='dd' onkeyup="next(this, 'startYear');" size='2' maxlength='2'>/
+              <input type='text' class='dateInput' name='startYear' placeholder='yy' onkeyup="next(this, '');" size='4' maxlength='4'>
            </div>
             
-            <div class="datePick" id="endDate"> End Date: 
-              <input type="text" class="dateInput" name="endMonth" placeholder="mm" onkeyup="next(this,'endDay');" size="2" maxlength="2">/
-              <input type="text" class="dateInput" name="endDay" placeholder="dd" onkeyup="next(this,'endYear');" size="2" maxlength="2">/
-              <input type="text" class="dateInput" name="endYear" placeholder="yy" onkeyup="next(this,'');" size="4" maxlength="4">
-              <!-- <input type="text" name="dateInput" placeholder="mm">/
-              <input type="text" name="dateInput" placeholder="dd">/
-              <input type="text" name="dateInput" placeholder="yy"> 
-              <p class='date' id='endDatePick'></p> -->
+            <div class='datePick' id='endDate'> End Date: 
+              <input type='text' class='dateInput' name='endMonth' placeholder='mm' onkeyup="next(this,'endDay');" size='2' maxlength='2'>/
+              <input type='text' class='dateInput' name='endDay' placeholder='dd' onkeyup="next(this,'endYear');" size='2' maxlength='2'>/
+              <input type='text' class='dateInput' name='endYear' placeholder='yy' onkeyup="next(this,'');" size='4' maxlength='4'>
+             
             </div>
           </div>
 
-          <input type="submit" value="Submit">
         </form>
       </div>
     </div>

@@ -31,12 +31,10 @@ function xAxisLabelGenerator(x)
 function buildTicks()
 {
   var ticks = []
-  ticks[0] = [-1, ''];
   filetypes.forEach(function(extList,i)
   {
     ticks.push([i,extList[0]]);
   });
-  ticks.push([filetypes.length, '']);
   return ticks;
 }
 
@@ -65,28 +63,46 @@ function drawTimeline(dfiles) {
   var i = 0;
   var dpoints = [];
   allFileInfo = [];
+  var minTime, maxTime;
 
   if (dfiles !== null) {
     dfiles.forEach(function(file, i){
       allFileInfo.push(file);
       if (!debug) {
-        var jsTime = new Date(file.time*1000);
+        var jsTime = new Date(1000*file.time);
         dpoints.push([jsTime, classifyFile(file.type)]);
+        if (minTime == null && maxTime == null) {
+          minTime = jsTime;
+          maxTime = jsTime;
+        } else if ( jsTime < minTime)
+          minTime = jsTime;
+        else if ( jsTime > maxTime)
+          maxTime = jsTime;
       }
-      else 
-      {
+      else {
         dpoints.push([file.time, classifyFile(file.type)]);
-      }
+        console.log(file.time);
+        if (minTime == null && maxTime == null) {
+          minTime = file.time;
+          maxTime = file.time;
+        } else if ( file.time < minTime)
+          minTime = file.time;
+        else if ( file.time > maxTime)
+          maxTime = file.time;
+     }
     });
   }
-
+  
   var options = {
     xaxis: { 
       mode: "time",
-      timeformat: "%y/%m/%d",
-      //ticks: daysOfWeek
+      timeformat: "%Y/%m/%d",
+      zoomRange: [1000, maxTime-minTime],
+      panRange: [minTime, maxTime],
     },
     yaxis: {
+      min: -1,
+      max: 5,
       ticks: buildTicks(),
       zoomRange: false,
       panRange: false,
@@ -121,7 +137,6 @@ function drawTimeline(dfiles) {
   // without unbinding, will fire plotclick events multiple times
   timeline.unbind("plotclick");
   
-
   plot = $.plot(timeline, [dpoints], options);
 
   timeline.bind("plotclick", function (event, pos, item) {  
@@ -146,20 +161,12 @@ function drawTimeline(dfiles) {
   
   timeline.bind("plotzoom", function (event, pos, item) { 
     event.preventDefault();
-    var axes = plot.getAxes();
-    var x = plot.getOptions();
-    var minDate = new Date(axes.xaxis.min);
-    var maxDate = new Date(axes.xaxis.max);
-    console.log(axes, minDate, maxDate);
-     
+    adjustAxes(plot);
   });
   
   timeline.bind("plotpan", function (event, plot) {
-    var axes = plot.getAxes();
-    var x = plot.getOptions();
-    var minDate = new Date(axes.xaxis.min);
-    var maxDate = new Date(axes.xaxis.max);
-    console.log(axes, minDate, maxDate);
+    event.preventDefault();
+    adjustAxes(plot);
   });
 
   // add zoom buttons
@@ -174,12 +181,59 @@ function drawTimeline(dfiles) {
     event.preventDefault();
     plot.zoomOut();
   });
-  
-  var date = $("<p>").attr('id', 'datelabel').html("Date");
-  timeline.append(date);
  
+}
 
+function adjustAxes(plot) {
+  var axes = plot.getAxes();
+  var x = plot.getOptions();
+  var minDate = new Date(axes.xaxis.min);
+  var maxDate = new Date(axes.xaxis.max);
   
+  console.log(minDate, maxDate);
+  
+  //same year
+  if (minDate.getFullYear() === maxDate.getFullYear()) {
+    $("#tl-Year").html(minDate.getFullYear());
+    
+    //same month
+    if (minDate.getMonth() === maxDate.getMonth()) {
+      $("#tl-Month").html("/"+(minDate.getMonth()+1));
+      
+      //same day -> switch to HMS time
+      if (maxDate.getDate() - minDate.getDate() <= 1) {
+        $("#tl-Date").html("/"+minDate.getDate());
+        plot.getOptions().xaxes[0].timeformat = '%H:%M:%S';
+      } 
+      
+      //different days
+      else {
+         $("#tl-Date").html('');
+        if (minDate.getDate() < maxDate.getDate()) {
+          plot.getOptions().xaxes[0].timeformat = '%d';
+        }
+      }
+    }
+
+    //different months
+    else {
+      $("#tl-Month").html('');
+      $("#tl-Date").html('');
+      //different days
+      if (minDate.getMonth() < maxDate.getMonth()) {
+        plot.getOptions().xaxes[0].timeformat = '%m/%d';
+      }
+    }
+  } 
+  //different years
+  else {
+    $("#tl-Year").html('');
+    $("#tl-Month").html('');
+    $("#tl-Date").html('');
+    plot.getOptions().xaxes[0].timeformat = '%Y/%m/%d';
+  }
+  plot.setupGrid();
+  plot.draw();
 }
 
 // customize the way data points are drawn, by color
