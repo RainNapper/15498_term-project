@@ -130,6 +130,7 @@ function drawTimeline(dfiles) {
   timeline.unbind("plotclick");
   
   plot = $.plot(timeline, [dpoints], options);
+  adjustAxes(plot);
 
   timeline.bind("plotclick", function (event, pos, item) {  
     if (item) {
