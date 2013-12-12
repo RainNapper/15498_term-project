@@ -14,8 +14,6 @@ var images = [];
 var db_path = 'target_img_db.db';
 var target_img = "";
 
-
-
 // req type:
 // - None
 // res type:
@@ -168,20 +166,25 @@ app.get('/get_files', function(req,res) {
   var query = build_query(req.query);
   db.serialize(function() {
     if(!exists)
-  {
-    console.log("Can't find db file");
-  }
+    {
+      console.log("Can't find db file");
+    }
     else
   {
     db.each(query,
       // Callback
       function(err,row)
       {
-        //          console.log(row.name);
+        var matches = row.name.match(/.*(\.[^\.]+)/);
+        if(matches === null)
+          var ext = null;
+        else
+          var ext = matches[1];
+        console.log(ext);
         var converted = {
           'time' : row.crtime,
-      'type' : '.jpg',
-      'name' : row.name
+          'type' : ext,
+          'name' : row.name
         };
         files.push(converted);
       },
