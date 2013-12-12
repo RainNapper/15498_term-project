@@ -133,7 +133,7 @@ function build_query(req)
     var extFilter = null;
     (req.extensions).forEach(function(ext,i)
     {
-      var nextPart = file_db.name.like('%.'+ext);
+      var nextPart = file_db.name.like('%'+ext);
       if(extFilter === null)
         extFilter = nextPart;
       else

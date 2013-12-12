@@ -1,12 +1,3 @@
-//file extensions
-var filetypes = 
-  [
-    ['misc', ['.log'],'purple'],
-    ['docs', ['.doc', '.pdf', '.txt', '.ppt', '.tex'],'red'],
-    ['imgs', ['.jpg', '.gif', '.png', '.bmp'],'green'],
-    ['vids', ['.mp4', '.mov', '.m4v'],'yellow'],
-    ['audio',['.mp3', '.wav', '.flac'],'blue']
-  ]
 
 var highlighted = [];
 var plot;
