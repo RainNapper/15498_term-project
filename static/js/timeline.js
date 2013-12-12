@@ -92,6 +92,13 @@ function drawTimeline(dfiles) {
       zoomRange: [1000, maxTime-minTime], //1000ms => can't zoom beyond 1 sec
       panRange: [minTime, maxTime],
     },
+   series: {
+				lines: {
+					show: true
+				},
+				shadowSize: 0
+    },
+      
     yaxis: {
       min: -1,
       max: 5,
@@ -147,7 +154,6 @@ function drawTimeline(dfiles) {
       }
       displayHighlighted();
     }
-    else console.log("click");
   });
   
   timeline.bind("plothover", function(event, pos, item){
@@ -241,10 +247,14 @@ function raw(plot, ctx) {
       var color = filetypes[series.data[j][1]][2]
       var d = (series.data[j]);
       var x = offset.left + axes.xaxis.p2c(d[0]);
-      var y = offset.top + axes.yaxis.p2c(d[1]);
-      var r = 20;
-      ctx.fillStyle = color;
-      ctx.fillRect(x-r,y-r,2*r,2*r);
+       
+     
+      if (d[0] >= axes.xaxis.min && d[0] <= axes.xaxis.max) {
+        var y = offset.top + axes.yaxis.p2c(d[1]);
+        var r = 20;
+        ctx.fillStyle = color;
+        ctx.fillRect(x-r,y-r,2*r,2*r);
+      }
     }    
   }
 }
